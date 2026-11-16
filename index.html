@@ -327,7 +327,7 @@ footer a{color:#fff}
 
       <article class="step" id="s4">
         <div class="n">STAGE 4 · THE HUNT</div>
-        <h2>Put a roof on it: shop like a cash buyer.</h2>
+        <h2>Roof on, windows in: shop like a cash buyer.</h2>
         <p class="feel">"I texted my lender Saturday about a house and heard back Tuesday."</p>
         <p class="body">Colorado homes do not wait for business hours. The thing Jerry's clients mention most is how fast he answers. When you find the house, the numbers for that exact address are ready when you need them.</p>
         <ul>
@@ -338,7 +338,7 @@ footer a{color:#fff}
 
       <article class="step" id="s5">
         <div class="n">STAGE 5 · OFFER TO CLEAR-TO-CLOSE</div>
-        <h2>Windows and doors: no surprises from here.</h2>
+        <h2>Final inspection: no surprises from here.</h2>
         <p class="feel">"Underwriting feels like a black box. What are they even doing?"</p>
         <p class="body">Appraisal, underwriting, conditions, lock. This is where most people get nervous, so this is where you hear from Jerry the most. You always know what just happened, what is next and what he needs from you.</p>
       </article>
@@ -479,14 +479,15 @@ footer a{color:#fff}
   var steps = [].slice.call(document.querySelectorAll('.step'));
 
   function draw(p){
-    for (var i = 1; i < frames.length; i++) frames[i].style.opacity = ramp(p, i/6 - .03, i/6 + .07);
+    var vh = innerHeight;
+    for (var i = 1; i < frames.length; i++) frames[i].style.opacity = ramp(vh * .85 - steps[i].getBoundingClientRect().top, 0, vh * .25);
     if (!reduce) $('frames').style.transform = 'scale(' + (1.1 - .1*p).toFixed(4) + ')';
     var idx = Math.min(5, Math.floor(p*6));
     $('stageName').textContent = (p <= 0 ? 'Stage 1 of 6 · The dream' : 'Stage ' + (idx+1) + ' of 6 · ' + names[idx]);
     $('bar').style.width = (p*100).toFixed(1) + '%';
   }
   function progress(){
-    var mid = innerHeight * .5, tops = steps.map(function(el){ return el.getBoundingClientRect().top; });
+    var mid = innerHeight * .72, tops = steps.map(function(el){ return el.getBoundingClientRect().top; });
     if (mid <= tops[0]) return 0;
     for (var i = 5; i >= 0; i--) if (mid >= tops[i]) {
       var end = i < 5 ? tops[i+1] : tops[5] + steps[5].offsetHeight;
