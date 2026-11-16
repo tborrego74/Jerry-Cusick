@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jerry Cusick | Colorado Mortgage Broker in Denver | VA, Refinance, DSCR</title>
+<meta name="description" content="Jerry Cusick is a Denver mortgage loan officer who has helped Colorado buyers, veterans, homeowners and investors since 2004. Start with the house you want. He will map the loan that gets you there.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["MortgageBroker", "LocalBusiness"],
+      "@id": "https://jerrycusick.com/#business",
+      "name": "Jerry Cusick, Mortgage Loan Officer at IMB (Independent Mortgage Brokers)",
+      "url": "https://jerrycusick.com/",
+      "telephone": "+1-720-400-1407",
+      "email": "Jerry@IMBrokers.net",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "6825 E Tennessee Ave. Suite 415",
+        "addressLocality": "Denver",
+        "addressRegion": "CO",
+        "postalCode": "80224",
+        "addressCountry": "US"
+      },
+      "areaServed": { "@type": "State", "name": "Colorado" },
+      "knowsAbout": ["VA loans", "Mortgage refinance", "DSCR loans", "Home purchase loans", "Good Neighbor Next Door"],
+      "employee": { "@id": "https://jerrycusick.com/#jerry" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://jerrycusick.com/#jerry",
+      "name": "Jerry Cusick",
+      "jobTitle": "Mortgage Loan Officer",
+      "identifier": "NMLS #649445",
+      "worksFor": { "@type": "Organization", "name": "IMB (Independent Mortgage Brokers)", "identifier": "NMLS #2191655" },
+      "homeLocation": "Aurora, Colorado",
+      "sameAs": [
+        "https://www.linkedin.com/in/jerry-cusick-73172186/",
+        "https://www.youtube.com/@JerryCusick-IMB"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How much do I need for a down payment in Colorado?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It depends on the loan. Eligible veterans can often buy with no down payment using a VA loan. FHA loans start at 3.5% down for qualifying borrowers, and some conventional loans start at 3%. You do not need 20% down to buy a home." } },
+        { "@type": "Question", "name": "What is the difference between pre-qualification and pre-approval?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A pre-qualification is an estimate based on what you tell a lender. A pre-approval means your income, assets and credit have been reviewed, so sellers and agents treat your offer as far more reliable." } },
+        { "@type": "Question", "name": "What is a DSCR loan?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A DSCR (debt service coverage ratio) loan is for investment property. It qualifies mainly on whether the property's rent covers its mortgage payment, instead of on your personal income documents." } },
+        { "@type": "Question", "name": "What is the Good Neighbor Next Door program?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Good Neighbor Next Door is a HUD program that lets eligible teachers, law enforcement officers, firefighters and EMTs buy eligible HUD homes in revitalization areas at 50% off the list price, in exchange for living in the home for 36 months." } },
+        { "@type": "Question", "name": "Why use a mortgage broker instead of a bank?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A bank offers its own loans. A mortgage broker can shop your loan across multiple wholesale lenders and match you to the program and pricing that fits your situation." } }
+      ]
+    }
+  ]
+}
+</script>
+
+<style>
+/* Layout concept: one sticky sky. The left column tells the story; the right column is a single
+   Front Range scene where night turns to sunrise and the house gets built as the loan progresses. */
+:root{
+  --night:#12211e; --ink:#16241f; --paper:#f3f2ee; --card:#ffffff;
+  --dawn:#c8472b; --gold:#f2c14e; --spruce:#2c5a4c;
+  --muted:#4c5a55; --line:#cfd3cc;
+  --display:'Barlow Condensed','Arial Narrow',Impact,sans-serif;
+  --ui:'Barlow','Helvetica Neue',Arial,sans-serif;
+  --body:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --gutter:max(20px, env(safe-area-inset-left, 0px));
+  --head:60px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:.98;margin:0;text-wrap:balance;text-transform:uppercase;letter-spacing:.005em}
+header.top,.btn,.chip,.eyebrow,.trust,.stage-tag,.calc,form.lead,footer,.proto,.facts,.path .who,.path span.go,.step .n,.proof cite,.note,.callbar,.contactline{font-family:var(--ui)}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--dawn);outline-offset:3px}
+
+.proto{background:var(--dawn);color:#fff;font-size:13px;font-weight:600;text-align:center;padding:6px var(--gutter)}
+
+header.top{position:sticky;top:0;z-index:20;height:var(--head);display:flex;align-items:center;gap:20px;
+  padding-inline:var(--gutter);background:rgba(243,242,238,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{font:700 24px var(--display);text-transform:uppercase;letter-spacing:.03em;text-decoration:none;white-space:nowrap}
+.brand small{font:500 12px var(--ui);color:var(--muted);margin-left:8px;letter-spacing:0}
+header nav{display:flex;gap:22px;margin-left:auto;font-size:15px;font-weight:500}
+header nav a{text-decoration:none}
+header nav a:hover{color:var(--dawn)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;text-decoration:none;
+  font:700 16px var(--ui);padding:13px 22px;border-radius:3px;background:var(--ink);color:#fff;transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px);background:var(--dawn)}
+.btn.gold{background:var(--gold);color:var(--ink)}
+.btn.gold:hover{background:#fff}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn.sm{padding:9px 16px;font-size:14px}
+
+/* ---------- Story grid ---------- */
+.story{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr)}
+.col{padding:56px clamp(20px,3.6vw,56px) 80px;min-width:0}
+.scene{position:sticky;top:var(--head);height:calc(100vh - var(--head));overflow:hidden;background:var(--night)}
+.frames{position:absolute;inset:0;transform-origin:50% 60%;will-change:transform}
+.frames img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 55%;will-change:opacity}
+.scene::after{content:"";position:absolute;inset:auto 0 0 0;height:120px;background:linear-gradient(transparent,rgba(10,20,18,.7));pointer-events:none}
+.stage-tag{z-index:2}
+.stage-tag{position:absolute;left:20px;right:20px;bottom:20px;display:flex;align-items:center;gap:12px;
+  color:#fff;font-weight:600;font-size:15px;text-shadow:0 1px 8px rgba(13,20,51,.6)}
+.stage-tag .bar{flex:1;height:4px;border-radius:4px;background:rgba(255,255,255,.3);overflow:hidden}
+.stage-tag .bar i{display:block;height:100%;width:0;background:var(--gold)}
+
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--dawn)}
+.hero h1{font-size:clamp(46px,5.1vw,84px);font-weight:700;margin:14px 0 20px}
+.hero h1 em{font-style:normal;color:var(--dawn)}
+.hero .lede{font-size:clamp(18px,1.5vw,21px);color:var(--muted);max-width:34em}
+.where{margin-top:32px;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:4px}
+.where h2{font-size:26px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.chip{font:600 15px var(--ui);padding:10px 16px;border-radius:3px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;text-decoration:none}
+.chip:hover,.chip[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:#fff}
+.trust{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px;font-size:14px;color:var(--muted);font-weight:500}
+.trust b{color:var(--ink)}
+
+.steps{margin-top:72px;display:grid;gap:72px}
+.step{scroll-margin-top:90px}
+.step .n{display:inline-block;font:700 13px var(--ui);color:#fff;background:var(--spruce);letter-spacing:.12em;padding:5px 10px;border-radius:2px}
+/*h2*/.step h2{margin-top:14px;font-size:clamp(38px,4vw,60px);font-weight:700;margin:14px 0 10px}
+.step .feel{font:italic 400 21px/1.4 var(--body);color:var(--spruce);margin-bottom:14px}
+.step p.body{color:var(--muted);max-width:36em}
+.step ul{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:8px;max-width:36em}
+.step li{padding-left:26px;position:relative}
+.step li::before{content:"";position:absolute;left:0;top:.5em;width:14px;height:8px;border-left:2.5px solid var(--dawn);border-bottom:2.5px solid var(--dawn);transform:rotate(-45deg)}
+.step .next{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
+
+/* calculator */
+.calc{margin-top:22px;background:var(--night);color:#fff;border-radius:4px;padding:22px;max-width:520px}
+.calc .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.calc label{display:grid;gap:6px;font-size:13px;font-weight:600;color:#c9d0ea}
+.calc input{width:100%;font:600 17px var(--ui);padding:10px 12px;border-radius:4px;border:1px solid #39426e;background:#1a2350;color:#fff}
+.calc .out{margin-top:18px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.calc .out strong{font:700 40px var(--display);color:var(--gold);font-variant-numeric:tabular-nums}
+.calc small{display:block;margin-top:10px;color:#aab3d6;font-size:12.5px;line-height:1.45}
+
+/* ---------- Sections below the story ---------- */
+section.band{padding-block:88px}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:var(--gutter)}
+.band h2.big{font-size:clamp(42px,5vw,76px);font-weight:700;max-width:16em}
+.band .sub{color:var(--muted);max-width:40em;margin-top:14px;font-size:18px}
+
+.paths{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-top:40px}
+.path{background:var(--card);padding:28px;display:flex;flex-direction:column;gap:10px;text-decoration:none;transition:background .15s}
+.path:hover{background:#faf3e3}
+.path h3{font-size:32px;font-weight:700}
+.path .who{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dawn)}
+.path p{color:var(--muted);font-size:16px}
+.path span.go{margin-top:auto;font-weight:700;padding-top:8px}
+
+.dark{background:var(--night);color:#fff}
+.dark .sub{color:#b9c1e0}
+.proof{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;margin-top:44px}
+.proof div{border-top:2px solid var(--gold);padding-top:18px}
+.proof h3{font-size:36px;font-weight:700;color:var(--gold)}
+.proof p{color:#d5dbf2;margin-top:8px;font-size:16px}
+.proof cite{display:block;margin-top:12px;font-style:normal;font-size:13.5px;color:#97a1c9}
+.note{margin-top:30px;font-size:13px;color:#97a1c9;border:1px dashed #4a5587;border-radius:4px;padding:10px 14px;max-width:46em}
+
+.meet{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:48px;align-items:center}
+.photo{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:4px;box-shadow:14px 14px 0 var(--spruce)}
+.photo b{display:block;font:700 84px var(--display);line-height:1}
+.meet p{color:var(--muted);margin-top:16px;max-width:38em}
+.facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.facts span{border:1.5px solid var(--line);background:var(--card);border-radius:3px;padding:7px 14px;font-size:14.5px;font-weight:600}
+
+.faq{margin-top:36px;border-top:1px solid var(--line);max-width:820px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;font:600 21px var(--body);position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:6px;top:14px;font-size:28px;font-weight:400;color:var(--dawn)}
+.faq details[open] summary::after{content:"\2013"}
+.faq details p{padding:0 0 22px;color:var(--muted);max-width:40em}
+
+.cta{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:56px;align-items:start}
+.cta h2{font-size:clamp(44px,5.4vw,84px);font-weight:700}
+.cta h2 em{font-style:normal;color:var(--gold)}
+.contactline{margin-top:26px;display:grid;gap:6px;font-size:18px}
+.contactline a{color:var(--gold);font-weight:700;text-decoration:none}
+form.lead{background:#fff;color:var(--ink);border-radius:4px;padding:26px;display:grid;gap:14px}
+form.lead label{display:grid;gap:6px;font-size:14px;font-weight:600}
+form.lead input,form.lead select{font:500 16px var(--ui);padding:12px;border-radius:4px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);width:100%}
+form.lead .fine{font-size:12.5px;color:var(--muted);line-height:1.45}
+.done{background:#e9f6ef;border:1.5px solid #9cd3b5;border-radius:4px;padding:14px;font-weight:600;color:var(--spruce)}
+
+footer{background:#0b1614;color:#aab3d6;font-size:13.5px;line-height:1.6;padding-block:44px}
+footer .wrap{display:grid;gap:14px}
+footer b{color:#fff}
+footer a{color:#fff}
+.eho{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:#fff}
+.eho svg{width:34px;height:34px}
+
+.callbar{display:none}
+
+@media (max-width:900px){
+  header nav{display:none}
+  header.top .btn{margin-left:auto}
+  .brand small{display:none}
+  .story{grid-template-columns:minmax(0,1fr)}
+  .scene{order:-1;height:34vh;min-height:220px;z-index:5}
+  .col{padding:36px var(--gutter) 60px}
+  .steps{margin-top:56px;gap:60px}
+  .calc .row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .meet,.cta{grid-template-columns:minmax(0,1fr);gap:32px}
+  .photo{max-width:220px}
+  section.band{padding-block:64px}
+  .callbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;gap:10px;padding:10px var(--gutter) calc(10px + env(safe-area-inset-bottom,0px));background:rgba(243,242,238,.96);border-top:1px solid var(--line)}
+  .callbar .btn{flex:1;padding:12px 10px;font-size:15px}
+  footer{padding-bottom:110px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="proto">Concept prototype for review. Not live, and not yet approved by Jerry or IMB compliance.</div>
+
+<header class="top">
+  <a class="brand" href="#top">Jerry Cusick<small>Colorado mortgage broker · NMLS #649445</small></a>
+  <nav aria-label="Main">
+    <a href="#journey">The journey</a>
+    <a href="#paths">Loan paths</a>
+    <a href="#proof">Reviews</a>
+    <a href="#jerry">Meet Jerry</a>
+    <a href="#faq">Questions</a>
+  </nav>
+  <a class="btn sm" href="#start">Start my plan</a>
+</header>
+
+<main id="top">
+<div class="story">
+
+  <div class="col">
+    <div class="hero">
+      <p class="eyebrow">Denver · Aurora · all of Colorado</p>
+      <h1>Tell me about the house. <em>I'll handle the mortgage.</em></h1>
+      <p class="lede">You are not shopping for a loan. You are trying to get to a front door that is yours. Jerry Cusick has been mapping that route for Colorado families, veterans and investors since 2004, in plain English and without the pressure.</p>
+
+      <div class="where">
+        <h2>Where are you right now?</h2>
+        <div class="chips" id="chips">
+          <a class="chip" href="#s1" data-stage="Just dreaming">Just dreaming</a>
+          <a class="chip" href="#s2" data-stage="Buying in the next 6 months">Buying in the next 6 months</a>
+          <a class="chip" href="#s4" data-stage="Found a house">I found a house</a>
+          <a class="chip" href="#paths" data-stage="Refinancing">Refinancing</a>
+          <a class="chip" href="#paths" data-stage="Veteran or military">Veteran or military</a>
+          <a class="chip" href="#paths" data-stage="Investor">Buying a rental</a>
+        </div>
+      </div>
+
+      <div class="trust">
+        <span><b>Since 2004</b> in Colorado lending</span>
+        <span><b>21 client reviews</b> and counting</span>
+        <span><b>Lifelong Coloradan</b></span>
+      </div>
+    </div>
+
+    <div class="steps" id="journey">
+
+      <article class="step" id="s1">
+        <div class="n">STAGE 1 · THE DREAM</div>
+        <h2>It starts as a sketch in the dark.</h2>
+        <p class="feel">"Can we even afford this? I don't want to find out by getting rejected."</p>
+        <p class="body">Everyone starts here, scrolling listings at 11pm and doing math on a napkin. You do not need perfect credit or a pile of cash to have this conversation. You need fifteen minutes and someone who will tell you the truth.</p>
+        <ul>
+          <li>A conversation, not an application.</li>
+          <li>If you are ready, you get a plan. If you are not ready yet, you get the exact steps that make you ready.</li>
+        </ul>
+        <div class="next"><a class="btn" href="#start">Book the 15-minute dream call</a></div>
+      </article>
+
+      <article class="step" id="s2">
+        <div class="n">STAGE 2 · YOUR NUMBER</div>
+        <h2>Pour the foundation: a payment you can live with.</h2>
+        <p class="feel">"The bank says I qualify for a lot more than I want to spend."</p>
+        <p class="body">Jerry works backward from the monthly payment that lets you sleep at night, then shows you what home price that buys. Play with it here, then get real numbers for your situation.</p>
+
+        <div class="calc" aria-label="Payment illustration">
+          <div class="row">
+            <label for="price">Home price<input id="price" inputmode="numeric" value="550,000"></label>
+            <label for="down">Down payment %<input id="down" inputmode="decimal" value="10"></label>
+            <label for="rate">Rate you type in %<input id="rate" inputmode="decimal" value="6.5"></label>
+          </div>
+          <div class="out"><strong id="pay">$0</strong><span>per month, principal and interest, 30 years</span></div>
+          <small>Illustration only, using the rate you enter. This is not a rate quote, an offer or a commitment to lend. Taxes, insurance, HOA dues and mortgage insurance are not included. Your actual terms depend on your credit, property and loan program.</small>
+        </div>
+        <div class="next"><a class="btn ghost" href="#start">Get my real number from Jerry</a></div>
+      </article>
+
+      <article class="step" id="s3">
+        <div class="n">STAGE 3 · PRE-APPROVAL</div>
+        <h2>Raise the walls: a letter sellers take seriously.</h2>
+        <p class="feel">"We found the one and lost it to someone who was already approved."</p>
+        <p class="body">A real pre-approval means your income, assets and credit have already been reviewed. Your agent can write a confident offer and the seller knows you can close.</p>
+        <ul>
+          <li>Start the application online in minutes, from your couch.</li>
+          <li>Jerry compares loan programs across lenders and explains the tradeoffs of each.</li>
+        </ul>
+        <div class="next"><a class="btn" href="https://applywithjerry.my1003app.com/" rel="noopener">Start my pre-approval</a></div>
+      </article>
+
+      <article class="step" id="s4">
+        <div class="n">STAGE 4 · THE HUNT</div>
+        <h2>Put a roof on it: shop like a cash buyer.</h2>
+        <p class="feel">"I texted my lender Saturday about a house and heard back Tuesday."</p>
+        <p class="body">Colorado homes do not wait for business hours. The thing Jerry's clients mention most is how fast he answers. When you find the house, the numbers for that exact address are ready when you need them.</p>
+        <ul>
+          <li>Payment breakdown for the specific home you are standing in.</li>
+          <li>One direct line to Jerry. No call center, no ticket number.</li>
+        </ul>
+      </article>
+
+      <article class="step" id="s5">
+        <div class="n">STAGE 5 · OFFER TO CLEAR-TO-CLOSE</div>
+        <h2>Windows and doors: no surprises from here.</h2>
+        <p class="feel">"Underwriting feels like a black box. What are they even doing?"</p>
+        <p class="body">Appraisal, underwriting, conditions, lock. This is where most people get nervous, so this is where you hear from Jerry the most. You always know what just happened, what is next and what he needs from you.</p>
+      </article>
+
+      <article class="step" id="s6">
+        <div class="n">STAGE 6 · KEYS</div>
+        <h2>Lights on. Welcome home.</h2>
+        <p class="feel">"We did it."</p>
+        <p class="body">Closing day is the sunrise, not the finish line. Many of Jerry's clients have come back for a second and third loan, because he keeps watching for the moment a refinance would save you money.</p>
+        <div class="next"><a class="btn" href="#start">Start my journey</a><a class="btn ghost" href="#paths">See the loan paths</a></div>
+      </article>
+
+    </div>
+  </div>
+
+  <aside class="scene" aria-hidden="true">
+    <div class="frames" id="frames">
+      <img src="img/s0.jpg" alt="" fetchpriority="high">
+      <img src="img/s1.jpg" alt="" loading="eager">
+      <img src="img/s2.jpg" alt="" loading="eager">
+      <img src="img/s3.jpg" alt="" loading="eager">
+      <img src="img/s4.jpg" alt="" loading="eager">
+      <img src="img/s5.jpg" alt="" loading="eager">
+    </div>
+    <div class="stage-tag"><span id="stageName">The dream</span><span class="bar"><i id="bar"></i></span></div>
+  </aside>
+</div>
+
+<section class="band" id="paths">
+  <div class="wrap">
+    <p class="eyebrow">Loan paths</p>
+    <h2 class="big">Different doors. Same guide.</h2>
+    <p class="sub">The loan is the vehicle. Which one you take depends on who you are and where you are headed.</p>
+    <div class="paths">
+      <a class="path" href="#start"><span class="who">Veterans and military</span><h3>VA home loans</h3><p>You earned the benefit. Eligible buyers can often purchase with no down payment and no monthly mortgage insurance.</p><span class="go">Use my VA benefit →</span></a>
+      <a class="path" href="#start"><span class="who">First home or next home</span><h3>Home purchase</h3><p>Conventional, FHA and more. Jerry lines up the options side by side and explains the pros and cons of each.</p><span class="go">Plan my purchase →</span></a>
+      <a class="path" href="#start"><span class="who">Current homeowners</span><h3>Refinance strategy</h3><p>Lower the payment, shorten the term or put your equity to work. And an honest answer when the math says wait.</p><span class="go">Check my refinance →</span></a>
+      <a class="path" href="#start"><span class="who">Rental investors</span><h3>DSCR loans</h3><p>Qualify on what the property earns in rent, not on a stack of personal tax returns.</p><span class="go">Run my rental numbers →</span></a>
+      <a class="path" href="#start"><span class="who">Teachers, police, fire, EMTs</span><h3>Good Neighbor Next Door</h3><p>A HUD program offering eligible homes at 50% off list price to the people who serve the neighborhood.</p><span class="go">See if I qualify →</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="band dark" id="proof">
+  <div class="wrap">
+    <p class="eyebrow">What clients keep saying</p>
+    <h2 class="big">Three things show up in review after review.</h2>
+    <div class="proof">
+      <div><h3>He answers.</h3><p>Clients describe Jerry as responsive, quick and persistent about getting the loan done.</p><cite>Themes from reviews by Mark, Paul G., Jeff P., Glenn S., Jonathan H.</cite></div>
+      <div><h3>He explains.</h3><p>Multiple options, pros and cons laid out, patience with every question.</p><cite>Themes from reviews by Doug B., Michael A., Jeremy N.</cite></div>
+      <div><h3>They come back.</h3><p>Second and third loans, purchases and refinances, and referrals to family and friends.</p><cite>Themes from reviews by Maggie J., Robert B., Angela A., Paul G.</cite></div>
+    </div>
+    <p class="note">Prototype note: these are summaries of the 21 reviews on jerrycusick.com. The live site will show the reviews word for word with a link to the source, plus video testimonials.</p>
+  </div>
+</section>
+
+<section class="band" id="jerry">
+  <div class="wrap meet">
+    <img class="photo" src="img/jerry.jpg" width="800" height="1000" alt="Jerry Cusick, Colorado mortgage loan officer">
+    <div>
+      <p class="eyebrow">Meet your guide</p>
+      <h2 class="big">Clear guidance. Real follow-through.</h2>
+      <p>Jerry Cusick started in mortgage lending in 2004. He grew up in Commerce City, lives in Aurora and has spent his whole life in Colorado. People describe him as responsive, approachable and direct. He would rather you understand your options than feel pushed into one.</p>
+      <p>Off the clock you will find him on a golf course or at home with his partner and their Shih Tzu, Ted.</p>
+      <div class="facts"><span>In lending since 2004</span><span>Raised in Commerce City</span><span>Lives in Aurora</span><span>Office in Denver</span><span>Ted approves all loans (unofficially)</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="faq" style="padding-top:0">
+  <div class="wrap">
+    <p class="eyebrow">Straight answers</p>
+    <h2 class="big">Questions people ask before they call.</h2>
+    <div class="faq">
+      <details open><summary>How much do I need for a down payment in Colorado?</summary><p>It depends on the loan. Eligible veterans can often buy with no down payment using a VA loan. FHA loans start at 3.5% down for qualifying borrowers, and some conventional loans start at 3%. You do not need 20% down to buy a home.</p></details>
+      <details><summary>What is the difference between pre-qualification and pre-approval?</summary><p>A pre-qualification is an estimate based on what you tell a lender. A pre-approval means your income, assets and credit have been reviewed, so sellers and agents treat your offer as far more reliable.</p></details>
+      <details><summary>What is a DSCR loan?</summary><p>A DSCR (debt service coverage ratio) loan is for investment property. It qualifies mainly on whether the property's rent covers its mortgage payment, instead of on your personal income documents.</p></details>
+      <details><summary>What is the Good Neighbor Next Door program?</summary><p>It is a HUD program that lets eligible teachers, law enforcement officers, firefighters and EMTs buy eligible HUD homes in revitalization areas at 50% off the list price, in exchange for living in the home for 36 months.</p></details>
+      <details><summary>Why use a mortgage broker instead of a bank?</summary><p>A bank offers its own loans. A mortgage broker can shop your loan across multiple wholesale lenders and match you to the program and pricing that fits your situation.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="band dark" id="start">
+  <div class="wrap cta">
+    <div>
+      <p class="eyebrow">Fifteen minutes, no pressure</p>
+      <h2>Describe the house. <em>Jerry will draw the map.</em></h2>
+      <p class="sub">Tell him where you are and he will reach out personally. You will know it is him: same name, same number, every time.</p>
+      <div class="contactline">
+        <span>Call or text <a href="tel:+17204001407">(720) 400-1407</a></span>
+        <span>Email <a href="mailto:Jerry@IMBrokers.net">Jerry@IMBrokers.net</a></span>
+        <span>Ready now? <a href="https://applywithjerry.my1003app.com/" rel="noopener">Start the secure application</a></span>
+      </div>
+    </div>
+    <form class="lead" id="lead">
+      <label for="f-name">Your name<input id="f-name" name="name" autocomplete="name" required></label>
+      <label for="f-phone">Mobile number<input id="f-phone" name="phone" type="tel" autocomplete="tel" required></label>
+      <label for="f-stage">Where are you in the journey?
+        <select id="f-stage" name="stage">
+          <option>Just dreaming</option><option>Buying in the next 6 months</option><option>Found a house</option><option>Refinancing</option><option>Veteran or military</option><option>Investor</option>
+        </select>
+      </label>
+      <label for="f-time">Best time to reach you
+        <select id="f-time" name="time"><option>As soon as possible</option><option>Morning</option><option>Lunch hour</option><option>Evening</option></select>
+      </label>
+      <button class="btn" type="submit">Have Jerry reach out</button>
+      <p class="fine">By sending this you agree that Jerry Cusick may call or text you at the number provided about your request. Consent is not a condition of any loan. Message and data rates may apply.</p>
+      <div class="done" id="done" hidden>Prototype: nothing was sent. On the live site this lands on Jerry's phone at once and you get a text from his number within five minutes.</div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="eho"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 3 15v4h3v15h28V19h3v-4Z M9 31V16l11-7 11 7v15Z M14 20h12v3H14Z M14 25h12v3H14Z" fill="#fff" fill-rule="evenodd"/></svg>Equal Housing Opportunity</span>
+    <p><b>Jerry Cusick</b>, Mortgage Loan Officer, NMLS #649445. Powered by IMB (Independent Mortgage Brokers), NMLS #2191655. 6825 E Tennessee Ave. Suite 415, Denver, CO 80224. (720) 400-1407.</p>
+    <p>Verify licensing at <a href="https://www.nmlsconsumeraccess.org/" rel="noopener">NMLS Consumer Access</a>. This is not a commitment to lend. All loans are subject to credit approval, underwriting guidelines and program availability. Programs, rates and terms can change without notice. VA and HUD programs are subject to eligibility; this site is not affiliated with or endorsed by the Department of Veterans Affairs, HUD or any government agency.</p>
+    <p>Colorado regulatory disclosure text to be supplied by IMB compliance.</p>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a class="btn ghost" href="tel:+17204001407">Call Jerry</a>
+  <a class="btn" href="#start">Start my plan</a>
+</div>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function ramp(p,a,b){ return Math.max(0, Math.min(1, (p-a)/(b-a))); }
+  var frames = [].slice.call(document.querySelectorAll('#frames img'));
+  var marks = [0,.2,.37,.53,.7,.87];
+  var names = ['The dream','Your number','Pre-approval','The hunt','Clear to close','Keys'];
+  var steps = [].slice.call(document.querySelectorAll('.step'));
+
+  function draw(p){
+    for (var i = 1; i < frames.length; i++) frames[i].style.opacity = ramp(p, i/6 - .03, i/6 + .07);
+    if (!reduce) $('frames').style.transform = 'scale(' + (1.1 - .1*p).toFixed(4) + ')';
+    var idx = Math.min(5, Math.floor(p*6));
+    $('stageName').textContent = (p <= 0 ? 'Stage 1 of 6 · The dream' : 'Stage ' + (idx+1) + ' of 6 · ' + names[idx]);
+    $('bar').style.width = (p*100).toFixed(1) + '%';
+  }
+  function progress(){
+    var mid = innerHeight * .5, tops = steps.map(function(el){ return el.getBoundingClientRect().top; });
+    if (mid <= tops[0]) return 0;
+    for (var i = 5; i >= 0; i--) if (mid >= tops[i]) {
+      var end = i < 5 ? tops[i+1] : tops[5] + steps[5].offsetHeight;
+      return Math.min(1, (i + Math.min(1, (mid - tops[i]) / (end - tops[i]))) / 6);
+    }
+    return 0;
+  }
+  var ticking = false;
+  function onScroll(){ if (ticking) return; ticking = true; requestAnimationFrame(function(){ draw(progress()); ticking = false; }); }
+  addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll);
+  draw(progress());
+
+  // payment illustration
+  function num(v){ return parseFloat(String(v).replace(/[^0-9.]/g,'')) || 0; }
+  function calc(){
+    var P = num($('price').value) * (1 - Math.min(100, num($('down').value))/100);
+    var r = num($('rate').value)/1200, n = 360;
+    var m = r ? P*r/(1-Math.pow(1+r,-n)) : P/n;
+    $('pay').textContent = '$' + Math.round(m).toLocaleString('en-US');
+  }
+  ['price','down','rate'].forEach(function(id){ $(id).addEventListener('input', calc); });
+  calc();
+
+  // chips carry intent into the form
+  $('chips').addEventListener('click', function(e){
+    var c = e.target.closest('.chip'); if (!c) return;
+    [].forEach.call(this.children, function(x){ x.setAttribute('aria-pressed', x === c); });
+    $('f-stage').value = c.dataset.stage;
+  });
+  $('lead').addEventListener('submit', function(e){ e.preventDefault(); $('done').hidden = false; });
+})();
+</script>
+</body>
+</html>
