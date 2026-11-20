@@ -152,13 +152,29 @@ header nav a:hover{color:var(--dawn)}
 .step .next{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px}
 
 /* calculator */
-.calc{margin-top:22px;background:var(--night);color:#fff;border-radius:4px;padding:22px;max-width:520px}
+.calc{margin-top:22px;background:var(--night);color:#fff;border-radius:4px;padding:22px;max-width:560px}
+.calc .modes{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:18px;border:1px solid #35524a;border-radius:4px;overflow:hidden}
+.calc .modes button{font:700 14px var(--ui);letter-spacing:.02em;padding:12px 8px;border:0;background:transparent;color:#c5d2cc;cursor:pointer}
+.calc .modes button[aria-selected="true"]{background:var(--gold);color:var(--night)}
+.calc .modes button:focus-visible,.calc input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .calc .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.calc label{display:grid;gap:6px;font-size:13px;font-weight:600;color:#c9d0ea}
-.calc input{width:100%;font:600 17px var(--ui);padding:10px 12px;border-radius:4px;border:1px solid #39426e;background:#1a2350;color:#fff}
-.calc .out{margin-top:18px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.calc .out strong{font:700 40px var(--display);color:var(--gold);font-variant-numeric:tabular-nums}
-.calc small{display:block;margin-top:10px;color:#aab3d6;font-size:12.5px;line-height:1.45}
+.calc .row + .row{margin-top:12px}
+.calc label{display:grid;gap:6px;font-size:13px;font-weight:600;color:#c5d2cc;align-content:end}
+.calc label.wide{grid-column:1/-1}
+.calc label i{font-style:normal;font-weight:500;color:#8fa29a}
+.calc input{width:100%;font:600 17px var(--ui);padding:10px 12px;border-radius:4px;border:1px solid #35524a;background:#0b1614;color:#fff}
+.calc .out{margin-top:20px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.calc .out strong{font:700 44px/1 var(--display);color:var(--gold);font-variant-numeric:tabular-nums}
+.calc .out span{color:#c5d2cc;font-size:14px}
+.calc dl{margin:14px 0 0;display:grid;grid-template-columns:1fr auto;gap:6px 16px;font-size:14px;color:#c5d2cc;border-top:1px solid #29423b;padding-top:12px}
+.calc dl dd{margin:0;text-align:right;color:#fff;font-weight:600;font-variant-numeric:tabular-nums}
+.calc .need{margin-top:16px;padding:14px 16px;border-left:3px solid var(--gold);background:#1a2e29;font-size:15px;line-height:1.45}
+.calc .need b{display:block;font:700 28px/1.1 var(--display);color:#fff;letter-spacing:.01em;margin:4px 0;font-variant-numeric:tabular-nums}
+.calc .need span{color:#c5d2cc}
+.calc .hope{margin:14px 0 0;font-size:14.5px;line-height:1.5;color:#e6ece9}
+.calc .send{margin-top:16px;width:100%;background:var(--gold);color:var(--night);border-color:var(--gold)}
+.calc small{display:block;margin-top:12px;color:#9fb0a9;font-size:12.5px;line-height:1.45}
+[hidden]{display:none!important}
 
 /* ---------- Sections below the story ---------- */
 section.band{padding-block:88px}
@@ -207,6 +223,11 @@ form.lead{background:#fff;color:var(--ink);border-radius:4px;padding:26px;displa
 form.lead label{display:grid;gap:6px;font-size:14px;font-weight:600}
 form.lead input,form.lead select{font:500 16px var(--ui);padding:12px;border-radius:4px;border:1.5px solid var(--line);background:var(--paper);color:var(--ink);width:100%}
 form.lead .fine{font-size:12.5px;color:var(--muted);line-height:1.45}
+.attached{font:500 13.5px/1.45 var(--ui);background:#fbf3d9;border:1.5px solid #e6cf85;border-radius:4px;padding:10px 12px;color:var(--ink)}
+.attached button{font:inherit;font-weight:700;background:none;border:0;padding:0;margin-left:6px;color:var(--dawn);text-decoration:underline;cursor:pointer}
+.trap{position:absolute!important;left:-9999px;width:1px;height:1px;overflow:hidden}
+.oops{background:#fdeeea;border:1.5px solid #eab3a6;border-radius:4px;padding:14px;font-weight:600;color:#8c2a14}
+.oops a{color:inherit}
 .done{background:#e9f6ef;border:1.5px solid #9cd3b5;border-radius:4px;padding:14px;font-weight:600;color:var(--spruce)}
 
 footer{background:#0b1614;color:#aab3d6;font-size:13.5px;line-height:1.6;padding-block:44px}
@@ -301,14 +322,47 @@ footer a{color:#fff}
         <p class="feel">"The bank says I qualify for a lot more than I want to spend."</p>
         <p class="body">Jerry works backward from the monthly payment that lets you sleep at night, then shows you what home price that buys. Play with it here, then get real numbers for your situation.</p>
 
-        <div class="calc" aria-label="Payment illustration">
-          <div class="row">
+        <div class="calc" id="calc" aria-label="Payment and income estimate">
+          <div class="modes" role="tablist" aria-label="How do you want to start?">
+            <button type="button" role="tab" id="m-price" aria-selected="true">I have a price in mind</button>
+            <button type="button" role="tab" id="m-income" aria-selected="false">Start from my income</button>
+          </div>
+          <div class="row" id="r-price">
             <label for="price">Home price<input id="price" inputmode="numeric" value="550,000"></label>
             <label for="down">Down payment %<input id="down" inputmode="decimal" value="10"></label>
             <label for="rate">Rate you type in %<input id="rate" inputmode="decimal" value="6.5"></label>
           </div>
-          <div class="out"><strong id="pay">$0</strong><span>per month, principal and interest, 30 years</span></div>
-          <small>Illustration only, using the rate you enter. This is not a rate quote, an offer or a commitment to lend. Taxes, insurance, HOA dues and mortgage insurance are not included. Your actual terms depend on your credit, property and loan program.</small>
+          <div class="row" id="r-income" hidden>
+            <label for="income">Income / month<input id="income" inputmode="numeric" value="9,500"></label>
+            <label for="cash">Cash down<input id="cash" inputmode="numeric" value="40,000"></label>
+            <label for="rate2">Rate you type in %<input id="rate2" inputmode="decimal" value="6.5"></label>
+          </div>
+          <div class="row">
+            <label for="tax">Taxes / year<input id="tax" inputmode="numeric" value="3,000"></label>
+            <label for="ins">Insurance / year<input id="ins" inputmode="numeric" value="3,000"></label>
+            <label for="hoa">HOA / month<input id="hoa" inputmode="numeric" value="0"></label>
+            <label for="debts" class="wide">Other monthly debts <i>(car, student loans, card minimums. Optional.)</i><input id="debts" inputmode="numeric" value="0"></label>
+          </div>
+
+          <div id="o-price" aria-live="polite">
+            <div class="out"><strong id="pay">$0</strong><span>estimated total monthly payment</span></div>
+            <dl>
+              <dt>Principal and interest, 30 years</dt><dd id="b-pi">$0</dd>
+              <dt>Property taxes</dt><dd id="b-tax">$0</dd>
+              <dt>Home insurance</dt><dd id="b-ins">$0</dd>
+              <dt id="t-pmi">Mortgage insurance, estimated</dt><dd id="b-pmi">$0</dd>
+              <dt id="t-hoa">HOA dues</dt><dd id="b-hoa">$0</dd>
+            </dl>
+            <div class="need"><span>Estimated household income to carry it</span><b id="need">$0 a month</b><span id="need-yr">before taxes</span></div>
+            <p class="hope">Not there yet? You may be closer than you think. A different down payment, a co-borrower or a different loan program can move this number. That is a 15-minute conversation with Jerry.</p>
+          </div>
+          <div id="o-income" aria-live="polite" hidden>
+            <div class="out"><strong id="range">$0</strong><span>estimated price range</span></div>
+            <div class="need"><span>Estimated total payment at the top of that range</span><b id="range-pay">$0 a month</b><span>principal, interest, taxes, insurance and any mortgage insurance</span></div>
+            <p class="hope" id="range-hope">The low end keeps your total monthly debts near 36% of income. The top uses 45%, a common upper limit. Where you land inside it is your call, and Jerry can show you what moves it.</p>
+          </div>
+          <button class="btn send" type="button" id="calc-send">Send these numbers to Jerry</button>
+          <small>Estimate only, built from the rate and costs you type in. This is not a rate quote, a pre-approval, an offer or a commitment to lend. Mortgage insurance is estimated at 0.5% of the loan per year when the down payment is under 20%; some programs have none. Income estimates use a 45% debt-to-income ratio, which varies by loan program and credit. Your actual numbers depend on your credit, the property and the loan program.</small>
         </div>
         <div class="next"><a class="btn ghost" href="#start">Get my real number from Jerry</a></div>
       </article>
@@ -445,9 +499,12 @@ footer a{color:#fff}
       <label for="f-time">Best time to reach you
         <select id="f-time" name="time"><option>As soon as possible</option><option>Morning</option><option>Lunch hour</option><option>Evening</option></select>
       </label>
-      <button class="btn" type="submit">Have Jerry reach out</button>
+      <label class="trap" aria-hidden="true">Company<input id="f-company" name="company" tabindex="-1" autocomplete="off"></label>
+      <div class="attached" id="attached" hidden>Your calculator estimate will be sent with this so Jerry starts from your numbers.<button type="button" id="detach">Remove</button></div>
+      <button class="btn" type="submit" id="f-send">Have Jerry reach out</button>
       <p class="fine">By sending this you agree that Jerry Cusick may call or text you at the number provided about your request. Consent is not a condition of any loan. Message and data rates may apply.</p>
-      <div class="done" id="done" hidden>Prototype: nothing was sent. On the live site this lands on Jerry's phone at once and you get a text from his number within five minutes.</div>
+      <div class="done" id="done" role="status" hidden>Got it. Jerry will reach out personally at the number you gave.</div>
+      <div class="oops" id="oops" role="alert" hidden></div>
     </form>
   </div>
 </section>
@@ -500,16 +557,84 @@ footer a{color:#fff}
   addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll);
   draw(progress());
 
-  // payment illustration
-  function num(v){ return parseFloat(String(v).replace(/[^0-9.]/g,'')) || 0; }
-  function calc(){
-    var P = num($('price').value) * (1 - Math.min(100, num($('down').value))/100);
-    var r = num($('rate').value)/1200, n = 360;
-    var m = r ? P*r/(1-Math.pow(1+r,-n)) : P/n;
-    $('pay').textContent = '$' + Math.round(m).toLocaleString('en-US');
+  // anonymous counters for Jerry's traffic page: no cookies, no names, no numbers
+  function track(e){
+    try { fetch('/api/track', {method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body:JSON.stringify({e:e})}).catch(function(){}); } catch(x){}
   }
-  ['price','down','rate'].forEach(function(id){ $(id).addEventListener('input', calc); });
+  try { if (!sessionStorage.getItem('jc-v')) { sessionStorage.setItem('jc-v','1'); track('visit'); } } catch(x){ track('visit'); }
+
+  // payment and income estimate
+  var PMI = 0.005, LIMIT = 0.45, EASY = 0.36, N = 360;
+  var mode = 'price', summary = '', attached = false, started = false;
+  function num(v){ return parseFloat(String(v).replace(/[^0-9.]/g,'')) || 0; }
+  function usd(v){ return '$' + Math.max(0, Math.round(v)).toLocaleString('en-US'); }
+  function factor(ratePct){ var r = ratePct/1200; return r ? r/(1-Math.pow(1+r,-N)) : 1/N; }
+  function show(id, on){ $(id).hidden = !on; }
+
+  function calcPrice(){
+    var price = num($('price').value), downPct = Math.min(100, num($('down').value));
+    var loan = price * (1 - downPct/100), rate = num($('rate').value);
+    var pi = loan * factor(rate), tax = num($('tax').value)/12, ins = num($('ins').value)/12, hoa = num($('hoa').value);
+    var pmi = downPct < 20 ? loan * PMI / 12 : 0, debts = num($('debts').value);
+    var total = pi + tax + ins + pmi + hoa, need = (total + debts) / LIMIT;
+    $('pay').textContent = usd(total);
+    $('b-pi').textContent = usd(pi); $('b-tax').textContent = usd(tax); $('b-ins').textContent = usd(ins);
+    $('b-pmi').textContent = usd(pmi); $('b-hoa').textContent = usd(hoa);
+    show('t-pmi', pmi > 0); show('b-pmi', pmi > 0); show('t-hoa', hoa > 0); show('b-hoa', hoa > 0);
+    $('need').textContent = usd(Math.ceil(need/10)*10) + ' a month';
+    $('need-yr').textContent = 'about ' + usd(Math.ceil(need*12/1000)*1000) + ' a year, before taxes' + (debts ? ', including your other debts' : '');
+    summary = 'Started from a price. Home ' + usd(price) + ', ' + downPct + '% down, typed rate ' + rate + '%, taxes ' + usd(tax*12) + '/yr, insurance ' + usd(ins*12) + '/yr, HOA ' + usd(hoa) + '/mo, other debts ' + usd(debts) + '/mo. Est. payment ' + usd(total) + '/mo. Est. income to carry it ' + usd(need) + '/mo.';
+  }
+  function priceAt(dti, income, debts, fixed, cash, f){
+    var room = income * dti - debts - fixed;
+    if (room <= 0) return null;
+    var loan = room / f;                       // no mortgage insurance if the cash covers 20%
+    if (loan > 4 * cash) loan = Math.max(4 * cash, room / (f + PMI/12));
+    return { price: loan + cash, pay: income * dti - debts };
+  }
+  function calcIncome(){
+    var income = num($('income').value), cash = num($('cash').value), rate = num($('rate2').value), debts = num($('debts').value);
+    var fixed = num($('tax').value)/12 + num($('ins').value)/12 + num($('hoa').value), f = factor(rate);
+    var hi = priceAt(LIMIT, income, debts, fixed, cash, f), lo = priceAt(EASY, income, debts, fixed, cash, f);
+    var round = function(v){ return Math.round(v/5000)*5000; };
+    var base = 'Started from income. Income ' + usd(income) + '/mo, cash down ' + usd(cash) + ', typed rate ' + rate + '%, taxes ' + usd(num($('tax').value)) + '/yr, insurance ' + usd(num($('ins').value)) + '/yr, HOA ' + usd(num($('hoa').value)) + '/mo, other debts ' + usd(debts) + '/mo. ';
+    if (!hi || round(hi.price) < 50000) {
+      $('range').textContent = 'Let’s talk';
+      $('range-pay').textContent = 'You may be closer than this shows';
+      $('range-hope').textContent = 'These numbers are tight on paper, and paper is not the whole story. Paying down one debt, adding a co-borrower or using a different loan program can change the picture quickly. Jerry can show you which move matters most.';
+      summary = base + 'Estimate came out tight; wants to talk options.';
+      return;
+    }
+    var top = round(hi.price), bottom = lo ? Math.min(round(lo.price), top) : 0;
+    $('range').textContent = bottom >= 50000 && bottom < top ? usd(bottom) + ' to ' + usd(top) : 'Up to ' + usd(top);
+    $('range-pay').textContent = usd(hi.pay) + ' a month';
+    $('range-hope').textContent = 'The low end keeps your total monthly debts near 36% of income. The top uses 45%, a common upper limit. Where you land inside it is your call, and Jerry can show you what moves it.';
+    summary = base + 'Est. price range ' + $('range').textContent + '. Est. payment at top ' + usd(hi.pay) + '/mo.';
+  }
+  function calc(){ if (mode === 'price') calcPrice(); else calcIncome(); }
+  function setMode(m){
+    mode = m;
+    $('m-price').setAttribute('aria-selected', m === 'price'); $('m-income').setAttribute('aria-selected', m === 'income');
+    show('r-price', m === 'price'); show('o-price', m === 'price'); show('r-income', m === 'income'); show('o-income', m === 'income');
+    if (m === 'income') $('rate2').value = $('rate').value; else $('rate').value = $('rate2').value;
+    calc();
+  }
+  function begun(){ if (!started) { started = true; track('calc_start'); } }
+  $('m-price').addEventListener('click', function(){ begun(); setMode('price'); });
+  $('m-income').addEventListener('click', function(){ begun(); setMode('income'); });
+  ['price','down','rate','income','cash','rate2','tax','ins','hoa','debts'].forEach(function(id){
+    $(id).addEventListener('input', function(){ begun(); calc(); });
+  });
+  ['price','income','cash','tax','ins','hoa','debts'].forEach(function(id){
+    $(id).addEventListener('blur', function(){ var v = num(this.value); this.value = Math.round(v).toLocaleString('en-US'); });
+  });
   calc();
+  $('calc-send').addEventListener('click', function(){
+    calc(); attached = true; show('attached', true); track('calc_send');
+    $('start').scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
+    setTimeout(function(){ $('f-name').focus({preventScroll:true}); }, 600);
+  });
+  $('detach').addEventListener('click', function(){ attached = false; show('attached', false); });
 
   // chips carry intent into the form
   $('chips').addEventListener('click', function(e){
@@ -517,7 +642,26 @@ footer a{color:#fff}
     [].forEach.call(this.children, function(x){ x.setAttribute('aria-pressed', x === c); });
     $('f-stage').value = c.dataset.stage;
   });
-  $('lead').addEventListener('submit', function(e){ e.preventDefault(); $('done').hidden = false; });
+  // the lead goes to the server, which hands it to Jerry's CRM. Nothing is kept in the browser.
+  var CALL = ' Call or text Jerry at <a href="tel:+17204001407">(720) 400-1407</a> and you will reach him directly.';
+  $('lead').addEventListener('submit', function(e){
+    e.preventDefault();
+    var btn = $('f-send'), label = btn.textContent;
+    show('done', false); show('oops', false);
+    btn.disabled = true; btn.textContent = 'Sending…';
+    function fail(msg){ $('oops').innerHTML = msg; show('oops', true); btn.disabled = false; btn.textContent = label; }
+    fetch('/api/lead', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+      name: $('f-name').value, phone: $('f-phone').value, stage: $('f-stage').value, time: $('f-time').value,
+      company: $('f-company').value, source: attached ? 'calculator' : 'form', calc: attached ? summary : '', page: location.pathname
+    })}).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return {status:r.status, j:j}; }); })
+    .then(function(x){
+      if (x.j.ok) { show('done', true); btn.textContent = 'Sent'; $('lead').reset(); attached = false; show('attached', false); return; }
+      if (x.j.reason === 'invalid') return fail('Please check your name and a 10-digit mobile number, then send again.');
+      if (x.j.reason === 'not_configured') return fail('This preview is not connected to Jerry’s phone yet, so nothing was sent.' + CALL);
+      if (x.j.reason === 'slow_down') return fail('That is a few tries in a row.' + CALL);
+      fail('That did not go through.' + CALL);
+    }).catch(function(){ fail('That did not go through.' + CALL); });
+  });
 })();
 </script>
 </body>

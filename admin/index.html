@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Site traffic · Jerry Cusick</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--night:#12211e;--ink:#16241f;--paper:#f3f2ee;--card:#fff;--dawn:#c8472b;--gold:#f2c14e;--spruce:#2c5a4c;--muted:#4c5a55;--line:#cfd3cc;
+  --display:'Barlow Condensed','Arial Narrow',Impact,sans-serif;--ui:'Barlow','Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.5 var(--ui);-webkit-font-smoothing:antialiased}
+h1,h2{font-family:var(--display);font-weight:700;text-transform:uppercase;line-height:1;margin:0;letter-spacing:.01em}
+header{background:var(--night);color:#fff;padding:18px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{font-size:26px}
+header span{color:#c5d2cc;font-size:14px}
+header button{margin-left:auto}
+main{max-width:1040px;margin:0 auto;padding:28px 20px 64px;display:grid;gap:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px}
+.card h2{font-size:22px;margin-bottom:14px}
+button,.btn{font:700 15px var(--ui);padding:11px 18px;border-radius:4px;border:0;background:var(--dawn);color:#fff;cursor:pointer}
+button.quiet{background:transparent;color:inherit;border:1.5px solid currentColor}
+input{font:500 16px var(--ui);padding:12px;border-radius:4px;border:1.5px solid var(--line);background:var(--paper);width:100%}
+form{display:grid;gap:12px;max-width:380px}
+label{display:grid;gap:6px;font-weight:600;font-size:14px}
+.msg{font-weight:600;color:#8c2a14}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:16px}
+.tile b{display:block;font:700 40px/1 var(--display);font-variant-numeric:tabular-nums}
+.tile span{font-size:13.5px;color:var(--muted);font-weight:600}
+.tile small{display:block;color:var(--muted);font-size:12.5px;margin-top:4px}
+.bars{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:4px;align-items:end;height:170px;border-bottom:1.5px solid var(--ink)}
+.bars div{background:var(--spruce);min-height:2px;border-radius:2px 2px 0 0;position:relative}
+.bars div.today{background:var(--dawn)}
+.bars div:hover::after{content:attr(data-tip);position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--night);color:#fff;font-size:12px;font-weight:600;padding:4px 8px;border-radius:3px;white-space:nowrap;z-index:2;margin-bottom:4px}
+.axis{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.scroll{overflow-x:auto}
+main>*,#dash>*,.two>*{min-width:0}
+td:first-child{white-space:nowrap}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.funnel{display:grid;gap:10px}
+.funnel .f{display:grid;grid-template-columns:150px minmax(0,1fr) 70px;gap:10px;align-items:center;font-size:14.5px;font-weight:600}
+.funnel .f i{display:block;height:22px;background:var(--gold);border-radius:2px;min-width:2px}
+.funnel .f em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.note{font-size:13.5px;color:var(--muted)}
+.sample{background:#fbf3d9;border:1.5px solid #e6cf85;border-radius:4px;padding:12px 14px;font-weight:600}
+[hidden]{display:none!important}
+@media (max-width:760px){.tiles{grid-template-columns:1fr 1fr}.two{grid-template-columns:minmax(0,1fr)}.funnel .f{grid-template-columns:110px minmax(0,1fr) 50px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Site traffic</h1><span>Private page for Jerry Cusick</span>
+  <button class="quiet" id="out" hidden>Sign out</button>
+</header>
+<main>
+  <section class="card" id="gate">
+    <h2>Sign in</h2>
+    <form id="login">
+      <label for="pw">Password<input id="pw" type="password" autocomplete="current-password" required></label>
+      <button type="submit">See my numbers</button>
+      <div class="msg" id="msg" role="alert" hidden></div>
+    </form>
+    <p class="note" id="setup" hidden>The traffic counter is not connected yet, so there are no real numbers to show. <button class="quiet" type="button" id="demo" style="padding:6px 12px;font-size:13.5px">Show the layout with sample numbers</button></p>
+  </section>
+
+  <div id="dash" hidden style="display:grid;gap:22px">
+    <div class="sample" id="sample" hidden>Sample numbers, made up to show the layout. These are not real visitors.</div>
+    <div class="tiles">
+      <div class="tile"><span>Visits today</span><b id="t-today">0</b><small id="t-yest"></small></div>
+      <div class="tile"><span>Visits, last 7 days</span><b id="t-week">0</b><small id="t-prev"></small></div>
+      <div class="tile"><span>Calculator starts, 30 days</span><b id="t-calc">0</b><small id="t-calc-rate"></small></div>
+      <div class="tile"><span>Leads sent to you, 30 days</span><b id="t-lead">0</b><small id="t-lead-calc"></small></div>
+    </div>
+    <section class="card">
+      <h2>Visits by day, last 30 days</h2>
+      <div class="bars" id="bars" role="img" aria-label="Bar chart of visits per day for the last 30 days"></div>
+      <div class="axis"><span id="ax0"></span><span id="ax1"></span></div>
+    </section>
+    <div class="two">
+      <section class="card">
+        <h2>From visit to lead, 30 days</h2>
+        <div class="funnel" id="funnel"></div>
+        <p class="note">A calculator start is the first time a visitor changes a number. "Numbers sent" means they pressed the button to send their estimate to you.</p>
+      </section>
+      <section class="card">
+        <h2>Where visitors are, 30 days</h2>
+        <div class="scroll"><table id="geo"><thead><tr><th>Area</th><th>Visits</th></tr></thead><tbody></tbody></table></div>
+        <p class="note">City level at most, based on the visitor's network. Phones on cellular often show a nearby city.</p>
+      </section>
+    </div>
+    <section class="card">
+      <h2>By week</h2>
+      <div class="scroll"><table id="weeks"><thead><tr><th>Week of</th><th>Visits</th><th>Calculator starts</th><th>Numbers sent</th><th>Leads</th></tr></thead><tbody></tbody></table></div>
+    </section>
+    <p class="note">This page counts, it does not identify. No names, phone numbers, IP addresses or cookies are stored here. Lead details go straight to your CRM and nowhere else. Days are Denver time.</p>
+  </div>
+</main>
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var n = function(v){ return Number(v).toLocaleString('en-US'); };
+  var sum = function(rows, k){ return rows.reduce(function(a, r){ return a + r[k]; }, 0); };
+  var nice = function(d){ return new Date(d + 'T12:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric'}); };
+  function pct(a, b){ return b ? Math.round(a / b * 100) + '%' : '0%'; }
+
+  function render(data, isSample){
+    var d = data.daily, last30 = d.slice(-30), last7 = d.slice(-7), prev7 = d.slice(-14, -7);
+    $('gate').hidden = true; $('dash').hidden = false; $('out').hidden = false; $('sample').hidden = !isSample;
+    var today = d[d.length - 1], yest = d[d.length - 2];
+    $('t-today').textContent = n(today.visit); $('t-yest').textContent = 'Yesterday: ' + n(yest.visit);
+    $('t-week').textContent = n(sum(last7, 'visit')); $('t-prev').textContent = 'Week before: ' + n(sum(prev7, 'visit'));
+    var v = sum(last30, 'visit'), cs = sum(last30, 'calc_start'), cn = sum(last30, 'calc_send'), l = sum(last30, 'lead'), lc = sum(last30, 'lead_calc');
+    $('t-calc').textContent = n(cs); $('t-calc-rate').textContent = pct(cs, v) + ' of visits';
+    $('t-lead').textContent = n(l); $('t-lead-calc').textContent = n(lc) + ' came from the calculator';
+
+    var max = Math.max.apply(null, last30.map(function(r){ return r.visit; }).concat([1]));
+    $('bars').innerHTML = last30.map(function(r, i){
+      return '<div' + (i === last30.length - 1 ? ' class="today"' : '') + ' style="height:' + (r.visit / max * 100).toFixed(1) + '%" data-tip="' + nice(r.date) + ': ' + n(r.visit) + '"></div>';
+    }).join('');
+    $('ax0').textContent = nice(last30[0].date); $('ax1').textContent = 'Today, ' + nice(today.date);
+
+    var steps = [['Visits', v], ['Calculator starts', cs], ['Numbers sent', cn], ['Leads sent to you', l]];
+    $('funnel').innerHTML = steps.map(function(s){
+      return '<div class="f"><span>' + s[0] + '</span><i style="width:' + (v ? Math.max(.5, s[1] / v * 100) : 0).toFixed(1) + '%"></i><em>' + n(s[1]) + '</em></div>';
+    }).join('');
+
+    var geo = data.locations.length ? data.locations.map(function(g){ return '<tr><td></td><td>' + n(g.visits) + '</td></tr>'; }).join('') : '<tr><td>No visits counted yet</td><td></td></tr>';
+    $('geo').tBodies[0].innerHTML = geo;
+    data.locations.forEach(function(g, i){ $('geo').tBodies[0].rows[i].cells[0].textContent = g.place; });
+
+    var rows = '';
+    for (var end = d.length; end > 0; end -= 7) {
+      var w = d.slice(Math.max(0, end - 7), end);
+      rows += '<tr><td>' + nice(w[0].date) + (end === d.length ? ' (last 7 days)' : '') + '</td><td>' + n(sum(w, 'visit')) + '</td><td>' + n(sum(w, 'calc_start')) + '</td><td>' + n(sum(w, 'calc_send')) + '</td><td>' + n(sum(w, 'lead')) + '</td></tr>';
+    }
+    $('weeks').tBodies[0].innerHTML = rows;
+  }
+
+  function load(key, quiet){
+    return fetch('/api/stats', {headers: {'x-admin-key': key}}).then(function(r){ return r.json().catch(function(){ return {}; }); }).then(function(j){
+      if (j.ok) { try { sessionStorage.setItem('jc-admin', key); } catch(e){} render(j, false); return; }
+      try { sessionStorage.removeItem('jc-admin'); } catch(e){}
+      if (j.reason === 'not_configured') { $('setup').hidden = false; if (!quiet) say('Not connected yet.'); return; }
+      if (!quiet) say(j.reason === 'password' ? 'That password did not match.' : j.reason === 'slow_down' ? 'Too many tries. Wait 15 minutes and try again.' : 'Could not load the numbers. Try again in a minute.');
+    }).catch(function(){ if (!quiet) say('Could not reach the site. Check your connection and try again.'); });
+  }
+  function say(t){ $('msg').textContent = t; $('msg').hidden = false; }
+
+  $('login').addEventListener('submit', function(e){ e.preventDefault(); $('msg').hidden = true; load($('pw').value, false); });
+  $('out').addEventListener('click', function(){ try { sessionStorage.removeItem('jc-admin'); } catch(e){} location.reload(); });
+  $('demo').addEventListener('click', function(){
+    var daily = [], seed = 7, rnd = function(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    for (var i = 83; i >= 0; i--) {
+      var dt = new Date(Date.now() - i * 864e5), wk = dt.getDay() % 6 ? 1 : .7, v = Math.round((22 + rnd() * 18) * wk), cs = Math.round(v * (.12 + rnd() * .1));
+      var cn = Math.round(cs * (.2 + rnd() * .2)), lc = Math.min(cn, Math.round(cn * rnd())), l = lc + (rnd() > .7 ? 1 : 0);
+      daily.push({date: dt.toLocaleDateString('en-CA'), visit: v, calc_start: cs, calc_send: cn, lead: l, lead_calc: lc});
+    }
+    render({daily: daily, locations: [['Denver, CO',310],['Aurora, CO',188],['Lakewood, CO',74],['Commerce City, CO',61],['Thornton, CO',55],['Colorado Springs, CO',41],['Arvada, CO',38],['Outside the US',22]].map(function(x){ return {place:x[0], visits:x[1]}; })}, true);
+  });
+
+  var saved = null; try { saved = sessionStorage.getItem('jc-admin'); } catch(e){}
+  if (saved) load(saved, true);
+  else fetch('/api/stats').then(function(r){ return r.json(); }).then(function(j){ if (j.reason === 'not_configured') $('setup').hidden = false; }).catch(function(){});
+})();
+</script>
+</body>
+</html>
