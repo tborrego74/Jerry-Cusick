@@ -1,0 +1,234 @@
+{
+ "redirects": [
+  {
+   "source": "/about-us",
+   "destination": "/#meet",
+   "permanent": true
+  },
+  {
+   "source": "/about-us/",
+   "destination": "/#meet",
+   "permanent": true
+  },
+  {
+   "source": "/contact",
+   "destination": "/#start",
+   "permanent": true
+  },
+  {
+   "source": "/contact/",
+   "destination": "/#start",
+   "permanent": true
+  },
+  {
+   "source": "/resources/article",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/article/",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/guide",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/guide/",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/video",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/video/",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/watch",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/watch/",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/resources/",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/va-loan",
+   "destination": "/va-home-loans-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/va-loan/",
+   "destination": "/va-home-loans-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/dscr-loan",
+   "destination": "/dscr-loans-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/dscr-loan/",
+   "destination": "/dscr-loans-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/good-neighbor-next-door",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/good-neighbor-next-door/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/hud-homes",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/hud-homes/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/teachers",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/teachers/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/first-responders",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/first-responders/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/fha-loans",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/fha-loans/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/100-down-payment",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/100-down-payment/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/homebuyer-programs",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/homebuyer-programs/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/colorado-homebuyers",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/tag/colorado-homebuyers/",
+   "destination": "/good-neighbor-next-door-colorado/",
+   "permanent": true
+  },
+  {
+   "source": "/author/:path*",
+   "destination": "/#meet",
+   "permanent": true
+  },
+  {
+   "source": "/sitemap_index.xml",
+   "destination": "/sitemap.xml",
+   "permanent": true
+  },
+  {
+   "source": "/page-sitemap.xml",
+   "destination": "/sitemap.xml",
+   "permanent": true
+  },
+  {
+   "source": "/post-sitemap.xml",
+   "destination": "/sitemap.xml",
+   "permanent": true
+  },
+  {
+   "source": "/feed",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/feed/",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/:slug/feed",
+   "destination": "/:slug/",
+   "permanent": true
+  },
+  {
+   "source": "/:slug/feed/",
+   "destination": "/:slug/",
+   "permanent": true
+  }
+ ],
+ "headers": [
+  {
+   "source": "/admin/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex, nofollow"
+    }
+   ]
+  },
+  {
+   "source": "/api/(.*)",
+   "headers": [
+    {
+     "key": "X-Robots-Tag",
+     "value": "noindex"
+    }
+   ]
+  }
+ ]
+}
