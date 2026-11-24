@@ -40,6 +40,9 @@ main{padding:44px 20px 24px}
 main h2{font:700 32px/1.05 var(--display);text-transform:uppercase;color:var(--spruce);margin:48px 0 0;text-wrap:balance}
 main h3{font:700 19px/1.3 var(--ui);margin:30px 0 0}
 main p,main ul,main ol{margin:16px 0 0}
+main img{display:block;max-width:100%;height:auto;border-radius:4px}
+main figure{margin:28px 0 0}
+main figcaption{font:500 14px/1.4 var(--ui);color:var(--muted);margin-top:8px}
 main li{margin-top:8px}
 .tbl{overflow-x:auto;margin-top:20px}
 table{border-collapse:collapse;width:100%;font:500 15.5px/1.45 var(--ui);min-width:520px}
@@ -64,13 +67,18 @@ footer b{color:#fff}
 @media (max-width:760px){header nav{display:none}header.top .btn{margin-left:auto}.brand small{display:none}body{font-size:17px}}
 """
 
+def local(src): return '/img/guides/' + src.rsplit('/', 1)[-1]
+
 def clean(content):
     s = BeautifulSoup(content, 'html.parser')
     for fig in s.find_all('figure'):
-        if fig.find('img'): fig.decompose()                      # images are restored in a later pass
-        elif fig.find('table'):
+        if fig.find('table'):
             fig.name = 'div'; fig.attrs = {'class': 'tbl'}
-    for img in s.find_all('img'): img.decompose()
+    for img in s.find_all('img'):                                # pictures now live in /img/guides/
+        keep = {'src': local(img.get('src', '')), 'alt': img.get('alt', ''), 'loading': 'lazy', 'decoding': 'async'}
+        for k in ('width', 'height'):
+            if img.get(k): keep[k] = img[k]
+        img.attrs = keep
     for t in s.find_all('table'):
         if not (t.parent and t.parent.get('class') == ['tbl']): t.wrap(s.new_tag('div', attrs={'class': 'tbl'}))
     for sec in s.select('.schema-faq-section'):
@@ -85,7 +93,7 @@ def clean(content):
             if href.rstrip('/') == '/about-us': href = '/#jerry'
             el.attrs = {'href': href}
             if href.startswith('http'): el['rel'] = 'noopener'
-        elif el.get('class') in (['qa'], ['tbl']): pass
+        elif el.name == 'img' or el.get('class') in (['qa'], ['tbl']): pass
         else: el.attrs = {}
     out = str(s)
     return re.sub(r'\n{3,}', '\n\n', out).strip()
@@ -100,9 +108,11 @@ for slug in ORDER:
     seo = (seo if len(seo) <= 52 or seo.startswith('Frequently') else seo.split(':')[0]) + ' | Jerry Cusick'
     url = f'{SITE}/{slug}/'
     body = clean(p['content'])
+    pic = local(p['image']) if p.get('image') else '/img/share.jpg'
+    lead = f'<img class="lead" src="{pic}" alt="{html.escape(p.get("imageAlt") or title)}" width="1200" height="600">\n' if p.get('image') else ''
     qs = [n for n in (p.get('schema') or {}).get('@graph', []) if n.get('@type') == 'Question']
     graph = [{"@type": "Article", "headline": title, "description": desc, "datePublished": p['date'], "dateModified": p['modified'],
-              "mainEntityOfPage": url, "author": {"@type": "Person", "name": "Jerry Cusick", "url": SITE + "/#jerry"},
+              "mainEntityOfPage": url, "image": SITE + pic, "author": {"@type": "Person", "name": "Jerry Cusick", "url": SITE + "/#jerry"},
               "publisher": {"@type": "Organization", "name": "Jerry Cusick, Mortgage Loan Officer, NMLS #649445", "url": SITE + "/"}},
              {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
                                                              {"@type": "ListItem", "position": 2, "name": title, "item": url}]}]
@@ -125,7 +135,7 @@ for slug in ORDER:
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
 <meta property="og:url" content="{url}">
-<meta property="og:image" content="{SITE}/img/share.jpg">
+<meta property="og:image" content="{SITE}{pic}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -147,7 +157,7 @@ for slug in ORDER:
   <p class="by">By Jerry Cusick, Mortgage Loan Officer, NMLS #649445</p>
 </div></div>
 <main>
-{body}
+{lead}{body}
 
 </main>
 <section class="cta"><div>
