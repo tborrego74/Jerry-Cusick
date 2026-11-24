@@ -1,4 +1,4 @@
-// Receives a lead from the site and hands it straight to Jerry's CRM (GoHighLevel inbound webhook).
+// Receives a lead from the site and hands it straight to Jerry's CRM (GoHighLevel inbound webhook) and, when set up, emails it to him through Resend.
 // Lead details are forwarded, never stored or logged here.
 const { bump, body, sameSite, overLimit } = require('./_lib');
 
@@ -22,7 +22,9 @@ module.exports = async (req, res) => {
   } catch (err) { console.error('limit check failed:', err.message); }
 
   const hook = process.env.GHL_WEBHOOK_URL;
-  if (!hook) return res.status(503).json({ ok: false, reason: 'not_configured' });
+  const mailKey = process.env.RESEND_API_KEY, mailTo = process.env.LEAD_EMAIL_TO, mailFrom = process.env.LEAD_EMAIL_FROM;
+  const mailReady = !!(mailKey && mailTo && mailFrom);
+  if (!hook && !mailReady) return res.status(503).json({ ok: false, reason: 'not_configured' });
 
   const fromCalc = b.source === 'calculator';
   const parts = name.split(/\s+/);
@@ -41,13 +43,34 @@ module.exports = async (req, res) => {
     submitted_at: new Date().toISOString(),
   };
 
-  try {
+  // Two independent paths: the CRM and a plain email to Jerry. The lead counts as delivered if either one lands.
+  const toCrm = async () => {
     const r = await fetch(hook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(lead) });
     if (!r.ok) throw new Error('crm ' + r.status);
-  } catch (err) {
-    console.error('lead forward failed:', err.message); // status only, never the lead
-    return res.status(502).json({ ok: false, reason: 'delivery' });
-  }
+  };
+  const toEmail = async () => {
+    const text = [
+      'Name: ' + lead.full_name,
+      'Phone: ' + lead.phone,
+      'Where they are: ' + (lead.journey_stage || 'not given'),
+      'Best time: ' + (lead.best_time || 'not given'),
+      'Came from: ' + lead.lead_source,
+      lead.calculator_summary ? 'Calculator: ' + lead.calculator_summary : '',
+      'Page: ' + lead.page,
+      'Sent: ' + lead.submitted_at,
+      '',
+      lead.consent_text,
+    ].filter((l, i, all) => l || all[i - 1]).join('\n');
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + mailKey },
+      body: JSON.stringify({ from: mailFrom, to: mailTo.split(',').map((x) => x.trim()).filter(Boolean), subject: 'New website lead: ' + lead.full_name, text }),
+    });
+    if (!r.ok) throw new Error('email ' + r.status);
+  };
+  const results = await Promise.allSettled([hook ? toCrm() : Promise.reject(new Error('crm off')), mailReady ? toEmail() : Promise.reject(new Error('email off'))]);
+  results.forEach((x) => { if (x.status === 'rejected' && !/ off$/.test(x.reason.message)) console.error('lead forward failed:', x.reason.message); }); // status only, never the lead
+  if (!results.some((x) => x.status === 'fulfilled')) return res.status(502).json({ ok: false, reason: 'delivery' });
 
   try { await bump(fromCalc ? [['event', 'lead'], ['event', 'lead_calc']] : [['event', 'lead']]); } catch (err) { console.error('count failed:', err.message); }
   return res.status(200).json({ ok: true });

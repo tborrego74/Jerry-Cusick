@@ -19,6 +19,7 @@ Values live only in Vercel. Never commit them.
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Supabase project URL and server-only key. Holds the daily counters. Run `supabase/setup.sql` once in the Supabase SQL editor first. |
 | `ADMIN_PASSWORD` | Password for `/admin/`. |
 | `GHL_WEBHOOK_URL` | Inbound webhook URL from a GoHighLevel workflow. Every lead is posted here as JSON. |
+| `RESEND_API_KEY`, `LEAD_EMAIL_FROM`, `LEAD_EMAIL_TO` | Optional second path: each lead is also emailed through Resend. `LEAD_EMAIL_FROM` must be on a domain verified in Resend. A lead is delivered if either path succeeds. |
 
 Until these are set the site still works: the form tells visitors to call or text Jerry instead of pretending it sent, and the admin page says it is not connected.
 
