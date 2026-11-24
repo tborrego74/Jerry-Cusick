@@ -671,6 +671,12 @@ footer a{color:#fff}
   });
   // the lead goes to the server, which hands it to Jerry's CRM. Nothing is kept in the browser.
   var CALL = ' Call or text Jerry at <a href="tel:+17204001407">(720) 400-1407</a> and you will reach him directly.';
+  // if the server hand-off fails, the visitor can still reach Jerry in one tap with their details filled in
+  function direct(){
+    var msg = 'Hi Jerry, this is ' + $('f-name').value.trim() + '. ' + $('f-stage').value + '. Best time to reach me: ' + $('f-time').value.toLowerCase() + '.' + (attached ? ' ' + summary : '');
+    var q = encodeURIComponent(msg);
+    return ' <a href="sms:+17204001407?&body=' + q + '">Text these details to Jerry</a>, <a href="mailto:Jerry@IMBrokers.net?subject=' + encodeURIComponent('Website request') + '&body=' + q + '">email them</a>, or call <a href="tel:+17204001407">(720) 400-1407</a>.';
+  }
   $('lead').addEventListener('submit', function(e){
     e.preventDefault();
     var btn = $('f-send'), label = btn.textContent;
@@ -684,10 +690,9 @@ footer a{color:#fff}
     .then(function(x){
       if (x.j.ok) { show('done', true); btn.textContent = 'Sent'; $('lead').reset(); attached = false; show('attached', false); return; }
       if (x.j.reason === 'invalid') return fail('Please check your name and a 10-digit mobile number, then send again.');
-      if (x.j.reason === 'not_configured') return fail('This preview is not connected to Jerry’s phone yet, so nothing was sent.' + CALL);
       if (x.j.reason === 'slow_down') return fail('That is a few tries in a row.' + CALL);
-      fail('That did not go through.' + CALL);
-    }).catch(function(){ fail('That did not go through.' + CALL); });
+      fail('That did not go through on our end.' + direct());
+    }).catch(function(){ fail('That did not go through on our end.' + direct()); });
   });
 })();
 </script>
