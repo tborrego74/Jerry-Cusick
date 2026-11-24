@@ -1,14 +1,6 @@
 // Numbers for the admin page. Password protected. Returns counts only.
-const { storeReady, redis, day, overLimit, safeEqual, header } = require('./_lib');
-const FIELDS = ['visit', 'calc_start', 'calc_send', 'lead', 'lead_calc'];
-
-function toObject(v) {
-  if (!v) return {};
-  if (!Array.isArray(v)) return v;
-  const o = {};
-  for (let i = 0; i < v.length; i += 2) o[v[i]] = v[i + 1];
-  return o;
-}
+const { storeReady, db, day, overLimit, safeEqual, header } = require('./_lib');
+const FIELDS = ['visit', 'view', 'calc_start', 'calc_send', 'lead', 'lead_calc'];
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
@@ -26,20 +18,19 @@ module.exports = async (req, res) => {
   for (let i = DAYS - 1; i >= 0; i--) days.push(day(new Date(Date.now() - i * 86400000)));
   const uniq = [...new Set(days)];
   try {
-    const out = await redis([...uniq.map((d) => ['HGETALL', 'jc:d:' + d]), ...uniq.slice(-30).map((d) => ['HGETALL', 'jc:g:' + d])]);
-    const daily = uniq.map((d, i) => {
-      const h = toObject(out[i]);
+    const rows = await db('jc_counts?select=day,kind,key,n&day=gte.' + uniq[0] + '&limit=20000');
+    const byDay = {};
+    const breakdowns = { page: [], source: [], device: [], place: [] };
+    for (const r of rows || []) {
+      if (r.kind === 'event') (byDay[r.day] = byDay[r.day] || {})[r.key] = r.n;
+      else if (breakdowns[r.kind]) breakdowns[r.kind].push([r.day, r.key, r.n]);
+    }
+    const daily = uniq.map((d) => {
       const row = { date: d };
-      for (const f of FIELDS) row[f] = Number(h[f] || 0);
+      for (const f of FIELDS) row[f] = Number((byDay[d] || {})[f] || 0);
       return row;
     });
-    const places = {};
-    out.slice(uniq.length).forEach((h) => {
-      const o = toObject(h);
-      for (const k in o) places[k] = (places[k] || 0) + Number(o[k]);
-    });
-    const locations = Object.entries(places).sort((a, b) => b[1] - a[1]).slice(0, 15).map(([place, visits]) => ({ place, visits }));
-    return res.status(200).json({ ok: true, today: day(), daily, locations });
+    return res.status(200).json({ ok: true, today: day(), daily, breakdowns });
   } catch (err) {
     console.error('stats failed:', err.message);
     return res.status(502).json({ ok: false, reason: 'store' });

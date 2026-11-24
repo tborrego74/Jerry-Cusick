@@ -1,23 +1,24 @@
 // Shared helpers for the site's serverless functions.
-// Storage is Upstash Redis over REST (added from the Vercel Marketplace). Nothing personal is stored:
+// Storage is a small Supabase table reached over REST. Nothing personal is stored:
 // only daily counters and rough visitor locations. Lead details pass through to the CRM and are never kept here.
 const crypto = require('crypto');
 
-const KV_URL = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
-const KV_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
-const KEEP_SECONDS = 400 * 86400;
+const DB_URL = (process.env.SUPABASE_URL || '').replace(/\/$/, '');
+const DB_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 
-function storeReady() { return Boolean(KV_URL && KV_TOKEN); }
+function storeReady() { return Boolean(DB_URL && DB_KEY); }
 
-async function redis(commands) {
+// Talks to Supabase over its REST API with the server-only key. Tables and functions are in supabase/setup.sql.
+async function db(path, body) {
   if (!storeReady()) return null;
-  const r = await fetch(KV_URL.replace(/\/$/, '') + '/pipeline', {
-    method: 'POST',
-    headers: { Authorization: 'Bearer ' + KV_TOKEN, 'Content-Type': 'application/json' },
-    body: JSON.stringify(commands),
+  const r = await fetch(DB_URL + '/rest/v1/' + path, {
+    method: body ? 'POST' : 'GET',
+    headers: { apikey: DB_KEY, Authorization: 'Bearer ' + DB_KEY, 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
   });
   if (!r.ok) throw new Error('store ' + r.status);
-  return (await r.json()).map((x) => x.result);
+  const t = await r.text();
+  return t ? JSON.parse(t) : null;
 }
 
 // Calendar day in Jerry's time zone, e.g. 2026-11-20.
@@ -46,28 +47,21 @@ function place(req) {
 // One-way, salted, short-lived fingerprint used only to slow down abuse. The raw IP is never stored.
 function visitorKey(req) {
   const ip = (header(req, 'x-forwarded-for').split(',')[0] || header(req, 'x-real-ip') || 'unknown').trim();
-  const salt = process.env.ADMIN_PASSWORD || KV_TOKEN || 'jc';
+  const salt = process.env.ADMIN_PASSWORD || DB_KEY || 'jc';
   return crypto.createHash('sha256').update(salt + '|' + ip).digest('hex').slice(0, 24);
 }
 
 // Returns true when this visitor is over the limit for the window.
 async function overLimit(req, bucket, max, windowSeconds) {
   if (!storeReady()) return false;
-  const key = 'jc:rl:' + bucket + ':' + visitorKey(req);
-  const [count] = await redis([['INCR', key], ['EXPIRE', key, windowSeconds, 'NX']]);
+  const count = await db('rpc/jc_limit', { p_key: bucket + ':' + visitorKey(req), p_window: windowSeconds });
   return Number(count) > max;
 }
 
-async function bump(req, events) {
-  if (!storeReady()) return;
-  const d = day();
-  const cmds = [];
-  for (const e of events) cmds.push(['HINCRBY', 'jc:d:' + d, e, 1]);
-  cmds.push(['EXPIRE', 'jc:d:' + d, KEEP_SECONDS]);
-  if (events.includes('visit')) {
-    cmds.push(['HINCRBY', 'jc:g:' + d, place(req), 1], ['EXPIRE', 'jc:g:' + d, KEEP_SECONDS]);
-  }
-  await redis(cmds);
+// items: [[kind, key], ...] where kind is event, page, place, source or device. Adds one to each for today.
+async function bump(items) {
+  if (!storeReady() || !items.length) return;
+  await db('rpc/jc_bump', { p_day: day(), p_kinds: items.map((i) => i[0]), p_keys: items.map((i) => String(i[1]).slice(0, 90)) });
 }
 
 function body(req) {
@@ -91,4 +85,4 @@ function safeEqual(a, b) {
   return crypto.timingSafeEqual(ha, hb);
 }
 
-module.exports = { storeReady, redis, day, place, bump, body, sameSite, looksAutomated, overLimit, safeEqual, header };
+module.exports = { storeReady, db, day, place, bump, body, sameSite, looksAutomated, overLimit, safeEqual, header };

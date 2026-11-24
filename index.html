@@ -268,6 +268,7 @@ footer a{color:#fff}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
 </style>
+<script src="/js/clarity.js" defer></script>
 </head>
 <body>
 
@@ -331,7 +332,7 @@ footer a{color:#fff}
         <p class="feel">"The bank says I qualify for a lot more than I want to spend."</p>
         <p class="body">Jerry works backward from the monthly payment that lets you sleep at night, then shows you what home price that buys. Play with it here, then get real numbers for your situation.</p>
 
-        <div class="calc" id="calc" aria-label="Payment and income estimate">
+        <div class="calc" id="calc" data-clarity-mask="true" aria-label="Payment and income estimate">
           <div class="modes" role="tablist" aria-label="How do you want to start?">
             <button type="button" role="tab" id="m-price" aria-selected="true">I have a price in mind</button>
             <button type="button" role="tab" id="m-income" aria-selected="false">Start from my income</button>
@@ -524,7 +525,7 @@ footer a{color:#fff}
         <span>Ready now? <a href="https://applywithjerry.my1003app.com/" rel="noopener">Start the secure application</a></span>
       </div>
     </div>
-    <form class="lead" id="lead">
+    <form class="lead" id="lead" data-clarity-mask="true">
       <label for="f-name">Your name<input id="f-name" name="name" autocomplete="name" required></label>
       <label for="f-phone">Mobile number<input id="f-phone" name="phone" type="tel" autocomplete="tel" required></label>
       <label for="f-stage">Where are you in the journey?
@@ -562,6 +563,7 @@ footer a{color:#fff}
   <a class="btn" href="#start">Start my plan</a>
 </div>
 
+<script src="/js/track.js"></script>
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
@@ -595,11 +597,8 @@ footer a{color:#fff}
   addEventListener('scroll', onScroll, {passive:true}); addEventListener('resize', onScroll);
   draw(progress());
 
-  // anonymous counters for Jerry's traffic page: no cookies, no names, no numbers
-  function track(e){
-    try { fetch('/api/track', {method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body:JSON.stringify({e:e})}).catch(function(){}); } catch(x){}
-  }
-  try { if (!sessionStorage.getItem('jc-v')) { sessionStorage.setItem('jc-v','1'); track('visit'); } } catch(x){ track('visit'); }
+  // anonymous counters for Jerry's dashboard live in /js/track.js
+  function track(e){ if (window.jcTrack) window.jcTrack(e); }
 
   // payment and income estimate
   var PMI = 0.005, LIMIT = 0.45, EASY = 0.36, N = 360;

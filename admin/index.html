@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Site traffic · Jerry Cusick</title>
+<title>Site dashboard · Jerry Cusick</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -42,7 +42,7 @@ th,td{text-align:right;padding:8px 10px;border-bottom:1px solid var(--line);font
 th:first-child,td:first-child{text-align:left}
 th{font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
 .scroll{overflow-x:auto}
-main>*,#dash>*,.two>*{min-width:0}
+main>*,#dash>*,.two>*,.three>*{min-width:0}
 td:first-child{white-space:nowrap}
 .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
 .funnel{display:grid;gap:10px}
@@ -51,13 +51,33 @@ td:first-child{white-space:nowrap}
 .funnel .f em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
 .note{font-size:13.5px;color:var(--muted)}
 .sample{background:#fbf3d9;border:1.5px solid #e6cf85;border-radius:4px;padding:12px 14px;font-weight:600}
+.range{display:inline-flex;border:1.5px solid #35524a;border-radius:4px;overflow:hidden;margin-left:auto}
+.range button{background:transparent;color:#c5d2cc;border-radius:0;padding:9px 14px;font-size:14px}
+.range button[aria-pressed="true"]{background:var(--gold);color:var(--night)}
+header .range + button{margin-left:0}
+.tile em{font-style:normal;font-weight:700;font-size:13px;margin-left:6px}
+.tile em.up{color:var(--spruce)}.tile em.down{color:var(--dawn)}
+.list{display:grid;gap:9px}
+.list .r{display:grid;grid-template-columns:minmax(0,1fr) 56px;gap:4px 10px;font-size:14.5px;font-weight:600;align-items:center}
+.list .r span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.list .r em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.list .r i{grid-column:1/-1;display:block;height:6px;background:var(--spruce);border-radius:2px;min-width:2px}
+.list .none{color:var(--muted);font-size:14.5px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.clarity{display:flex;gap:18px;align-items:center;flex-wrap:wrap;background:var(--night);color:#fff;border:0}
+.clarity p{margin:0;flex:1;min-width:240px;color:#c5d2cc}
+.clarity b{display:block;color:#fff;font:700 22px var(--display);text-transform:uppercase;letter-spacing:.01em}
+.clarity a{background:var(--gold);color:var(--night);text-decoration:none}
 [hidden]{display:none!important}
-@media (max-width:760px){.tiles{grid-template-columns:1fr 1fr}.two{grid-template-columns:minmax(0,1fr)}.funnel .f{grid-template-columns:110px minmax(0,1fr) 50px}}
+@media (max-width:760px){.tiles{grid-template-columns:1fr 1fr}.three{grid-template-columns:minmax(0,1fr)}.two{grid-template-columns:minmax(0,1fr)}.funnel .f{grid-template-columns:110px minmax(0,1fr) 50px}}
 </style>
 </head>
 <body>
 <header>
-  <h1>Site traffic</h1><span>Private page for Jerry Cusick</span>
+  <h1>Site dashboard</h1><span>Private page for Jerry Cusick</span>
+  <div class="range" id="range" hidden role="group" aria-label="Time range">
+    <button type="button" data-d="7" aria-pressed="false">7 days</button><button type="button" data-d="30" aria-pressed="true">30 days</button><button type="button" data-d="84" aria-pressed="false">12 weeks</button>
+  </div>
   <button class="quiet" id="out" hidden>Sign out</button>
 </header>
 <main>
@@ -68,81 +88,117 @@ td:first-child{white-space:nowrap}
       <button type="submit">See my numbers</button>
       <div class="msg" id="msg" role="alert" hidden></div>
     </form>
-    <p class="note" id="setup" hidden>The traffic counter is not connected yet, so there are no real numbers to show. <button class="quiet" type="button" id="demo" style="padding:6px 12px;font-size:13.5px">Show the layout with sample numbers</button></p>
+    <p class="note" id="setup" hidden>The counter is not connected yet, so there are no real numbers to show. <button class="quiet" type="button" id="demo" style="padding:6px 12px;font-size:13.5px">Show the layout with sample numbers</button></p>
   </section>
 
   <div id="dash" hidden style="display:grid;gap:22px">
     <div class="sample" id="sample" hidden>Sample numbers, made up to show the layout. These are not real visitors.</div>
     <div class="tiles">
-      <div class="tile"><span>Visits today</span><b id="t-today">0</b><small id="t-yest"></small></div>
-      <div class="tile"><span>Visits, last 7 days</span><b id="t-week">0</b><small id="t-prev"></small></div>
-      <div class="tile"><span>Calculator starts, 30 days</span><b id="t-calc">0</b><small id="t-calc-rate"></small></div>
-      <div class="tile"><span>Leads sent to you, 30 days</span><b id="t-lead">0</b><small id="t-lead-calc"></small></div>
+      <div class="tile"><span>Visits</span><b id="k-visit">0</b><small id="d-visit"></small></div>
+      <div class="tile"><span>Pages viewed</span><b id="k-view">0</b><small id="d-view"></small></div>
+      <div class="tile"><span>Calculator starts</span><b id="k-calc">0</b><small id="d-calc"></small></div>
+      <div class="tile"><span>Leads sent to you</span><b id="k-lead">0</b><small id="d-lead"></small></div>
     </div>
     <section class="card">
-      <h2>Visits by day, last 30 days</h2>
-      <div class="bars" id="bars" role="img" aria-label="Bar chart of visits per day for the last 30 days"></div>
+      <h2 id="chart-title">Visits by day</h2>
+      <div class="bars" id="bars" role="img" aria-label="Bar chart of visits per day"></div>
       <div class="axis"><span id="ax0"></span><span id="ax1"></span></div>
     </section>
     <div class="two">
       <section class="card">
-        <h2>From visit to lead, 30 days</h2>
+        <h2>From visit to lead</h2>
         <div class="funnel" id="funnel"></div>
         <p class="note">A calculator start is the first time a visitor changes a number. "Numbers sent" means they pressed the button to send their estimate to you.</p>
       </section>
       <section class="card">
-        <h2>Where visitors are, 30 days</h2>
-        <div class="scroll"><table id="geo"><thead><tr><th>Area</th><th>Visits</th></tr></thead><tbody></tbody></table></div>
-        <p class="note">City level at most, based on the visitor's network. Phones on cellular often show a nearby city.</p>
+        <h2>Most viewed pages</h2>
+        <div class="list" id="l-page"></div>
       </section>
     </div>
-    <section class="card">
-      <h2>By week</h2>
-      <div class="scroll"><table id="weeks"><thead><tr><th>Week of</th><th>Visits</th><th>Calculator starts</th><th>Numbers sent</th><th>Leads</th></tr></thead><tbody></tbody></table></div>
+    <div class="three">
+      <section class="card"><h2>Where visits come from</h2><div class="list" id="l-source"></div></section>
+      <section class="card"><h2>Phone or computer</h2><div class="list" id="l-device"></div></section>
+      <section class="card"><h2>Where visitors are</h2><div class="list" id="l-place"></div><p class="note">City level at most. Phones on cellular often show a nearby city.</p></section>
+    </div>
+    <section class="card clarity">
+      <p><b>Watch how people use the site</b>Heatmaps and visit replays live in Microsoft Clarity. What visitors type into the form and calculator is hidden there.</p>
+      <a class="btn" href="https://clarity.microsoft.com/projects" target="_blank" rel="noopener">Open Clarity</a>
     </section>
-    <p class="note">This page counts, it does not identify. No names, phone numbers, IP addresses or cookies are stored here. Lead details go straight to your CRM and nowhere else. Days are Denver time.</p>
+    <section class="card">
+      <h2>By week, last 12 weeks</h2>
+      <div class="scroll"><table id="weeks"><thead><tr><th>Week of</th><th>Visits</th><th>Pages viewed</th><th>Calculator starts</th><th>Numbers sent</th><th>Leads</th></tr></thead><tbody></tbody></table></div>
+    </section>
+    <p class="note">This page counts, it does not identify. No names, phone numbers or IP addresses are stored here. Lead details go straight to your CRM and nowhere else. A visit is one person's session; a page view is each page they open. Days are Denver time.</p>
   </div>
 </main>
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
   var n = function(v){ return Number(v).toLocaleString('en-US'); };
-  var sum = function(rows, k){ return rows.reduce(function(a, r){ return a + r[k]; }, 0); };
+  var sum = function(rows, k){ return rows.reduce(function(a, r){ return a + (r[k] || 0); }, 0); };
   var nice = function(d){ return new Date(d + 'T12:00:00').toLocaleDateString('en-US', {month:'short', day:'numeric'}); };
-  function pct(a, b){ return b ? Math.round(a / b * 100) + '%' : '0%'; }
+  var esc = function(t){ var d = document.createElement('div'); d.textContent = t; return d.innerHTML; };
+  var data = null, days = 30;
 
-  function render(data, isSample){
-    var d = data.daily, last30 = d.slice(-30), last7 = d.slice(-7), prev7 = d.slice(-14, -7);
-    $('gate').hidden = true; $('dash').hidden = false; $('out').hidden = false; $('sample').hidden = !isSample;
-    var today = d[d.length - 1], yest = d[d.length - 2];
-    $('t-today').textContent = n(today.visit); $('t-yest').textContent = 'Yesterday: ' + n(yest.visit);
-    $('t-week').textContent = n(sum(last7, 'visit')); $('t-prev').textContent = 'Week before: ' + n(sum(prev7, 'visit'));
-    var v = sum(last30, 'visit'), cs = sum(last30, 'calc_start'), cn = sum(last30, 'calc_send'), l = sum(last30, 'lead'), lc = sum(last30, 'lead_calc');
-    $('t-calc').textContent = n(cs); $('t-calc-rate').textContent = pct(cs, v) + ' of visits';
-    $('t-lead').textContent = n(l); $('t-lead-calc').textContent = n(lc) + ' came from the calculator';
+  function pageName(p){
+    if (p === '/') return 'Home page';
+    return p.replace(/^\/|\/$/g, '').split('-').map(function(w){ return /^(va|dscr|faq)$/.test(w) ? w.toUpperCase() : w.charAt(0).toUpperCase() + w.slice(1); }).join(' ');
+  }
+  function delta(id, now, before, has){
+    var el = $(id);
+    if (!has) { el.textContent = ''; return; }
+    if (!before) { el.textContent = 'Previous period: 0'; return; }
+    var pc = Math.round((now - before) / before * 100);
+    el.innerHTML = 'Previous period: ' + n(before) + '<em class="' + (pc >= 0 ? 'up' : 'down') + '">' + (pc >= 0 ? '+' : '') + pc + '%</em>';
+  }
+  function list(id, rows, from, label){
+    var t = {};
+    (rows || []).forEach(function(r){ if (r[0] >= from) t[r[1]] = (t[r[1]] || 0) + r[2]; });
+    var top = Object.keys(t).map(function(k){ return [k, t[k]]; }).sort(function(a, b){ return b[1] - a[1]; }).slice(0, 8);
+    var max = top.length ? top[0][1] : 1;
+    $(id).innerHTML = top.length ? top.map(function(x){
+      return '<div class="r"><span title="' + esc(x[0]) + '">' + esc(label ? label(x[0]) : x[0]) + '</span><em>' + n(x[1]) + '</em><i style="width:' + (x[1] / max * 100).toFixed(1) + '%"></i></div>';
+    }).join('') : '<div class="none">Nothing counted in this period yet.</div>';
+  }
 
-    var max = Math.max.apply(null, last30.map(function(r){ return r.visit; }).concat([1]));
-    $('bars').innerHTML = last30.map(function(r, i){
-      return '<div' + (i === last30.length - 1 ? ' class="today"' : '') + ' style="height:' + (r.visit / max * 100).toFixed(1) + '%" data-tip="' + nice(r.date) + ': ' + n(r.visit) + '"></div>';
+  function draw(){
+    var d = data.daily, cur = d.slice(-days), prev = d.slice(-2 * days, -days), has = d.length >= 2 * days;
+    [].forEach.call($('range').children, function(b){ b.setAttribute('aria-pressed', Number(b.dataset.d) === days); });
+    var v = sum(cur, 'visit'), pv = sum(cur, 'view'), cs = sum(cur, 'calc_start'), cn = sum(cur, 'calc_send'), l = sum(cur, 'lead'), lc = sum(cur, 'lead_calc');
+    $('k-visit').textContent = n(v); delta('d-visit', v, sum(prev, 'visit'), has);
+    $('k-view').textContent = n(pv); delta('d-view', pv, sum(prev, 'view'), has);
+    $('k-calc').textContent = n(cs); delta('d-calc', cs, sum(prev, 'calc_start'), has);
+    $('k-lead').textContent = n(l); delta('d-lead', l, sum(prev, 'lead'), has);
+    if (!has) { $('d-calc').textContent = (v ? Math.round(cs / v * 100) : 0) + '% of visits'; $('d-lead').textContent = n(lc) + ' came from the calculator'; }
+
+    var max = Math.max.apply(null, cur.map(function(r){ return r.visit; }).concat([1]));
+    $('chart-title').textContent = 'Visits by day, last ' + (days === 84 ? '12 weeks' : days + ' days');
+    $('bars').innerHTML = cur.map(function(r, i){
+      return '<div' + (i === cur.length - 1 ? ' class="today"' : '') + ' style="height:' + (r.visit / max * 100).toFixed(1) + '%" data-tip="' + nice(r.date) + ': ' + n(r.visit) + '"></div>';
     }).join('');
-    $('ax0').textContent = nice(last30[0].date); $('ax1').textContent = 'Today, ' + nice(today.date);
+    $('ax0').textContent = nice(cur[0].date); $('ax1').textContent = 'Today, ' + nice(cur[cur.length - 1].date);
 
     var steps = [['Visits', v], ['Calculator starts', cs], ['Numbers sent', cn], ['Leads sent to you', l]];
     $('funnel').innerHTML = steps.map(function(s){
-      return '<div class="f"><span>' + s[0] + '</span><i style="width:' + (v ? Math.max(.5, s[1] / v * 100) : 0).toFixed(1) + '%"></i><em>' + n(s[1]) + '</em></div>';
+      return '<div class="f"><span>' + s[0] + '</span><i style="width:' + (v ? Math.min(100, Math.max(.5, s[1] / v * 100)) : 0).toFixed(1) + '%"></i><em>' + n(s[1]) + '</em></div>';
     }).join('');
 
-    var geo = data.locations.length ? data.locations.map(function(g){ return '<tr><td></td><td>' + n(g.visits) + '</td></tr>'; }).join('') : '<tr><td>No visits counted yet</td><td></td></tr>';
-    $('geo').tBodies[0].innerHTML = geo;
-    data.locations.forEach(function(g, i){ $('geo').tBodies[0].rows[i].cells[0].textContent = g.place; });
+    var from = cur[0].date, b = data.breakdowns || {};
+    list('l-page', b.page, from, pageName); list('l-source', b.source, from); list('l-device', b.device, from); list('l-place', b.place, from);
 
     var rows = '';
     for (var end = d.length; end > 0; end -= 7) {
       var w = d.slice(Math.max(0, end - 7), end);
-      rows += '<tr><td>' + nice(w[0].date) + (end === d.length ? ' (last 7 days)' : '') + '</td><td>' + n(sum(w, 'visit')) + '</td><td>' + n(sum(w, 'calc_start')) + '</td><td>' + n(sum(w, 'calc_send')) + '</td><td>' + n(sum(w, 'lead')) + '</td></tr>';
+      rows += '<tr><td>' + nice(w[0].date) + (end === d.length ? ' (last 7 days)' : '') + '</td><td>' + n(sum(w, 'visit')) + '</td><td>' + n(sum(w, 'view')) + '</td><td>' + n(sum(w, 'calc_start')) + '</td><td>' + n(sum(w, 'calc_send')) + '</td><td>' + n(sum(w, 'lead')) + '</td></tr>';
     }
     $('weeks').tBodies[0].innerHTML = rows;
   }
+  function render(j, isSample){
+    data = j;
+    $('gate').hidden = true; $('dash').hidden = false; $('out').hidden = false; $('range').hidden = false; $('sample').hidden = !isSample;
+    draw();
+  }
+  $('range').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return; days = Number(b.dataset.d); draw(); });
 
   function load(key, quiet){
     return fetch('/api/stats', {headers: {'x-admin-key': key}}).then(function(r){ return r.json().catch(function(){ return {}; }); }).then(function(j){
@@ -158,12 +214,21 @@ td:first-child{white-space:nowrap}
   $('out').addEventListener('click', function(){ try { sessionStorage.removeItem('jc-admin'); } catch(e){} location.reload(); });
   $('demo').addEventListener('click', function(){
     var daily = [], seed = 7, rnd = function(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; };
+    var B = {page: [], source: [], device: [], place: []};
+    var mix = {
+      page: [['/', .5], ['/va-home-loans-colorado/', .14], ['/good-neighbor-next-door-colorado/', .12], ['/dscr-loans-colorado/', .09], ['/va-funding-fee-colorado/', .07], ['/va-loans-colorado-springs/', .05], ['/privacy-policy/', .03]],
+      source: [['Google', .42], ['Direct or typed in', .27], ['Facebook', .16], ['AI assistants', .07], ['Bing', .05], ['Nextdoor', .03]],
+      device: [['Phone', .62], ['Computer', .33], ['Tablet', .05]],
+      place: [['Denver, CO', .36], ['Aurora, CO', .22], ['Lakewood, CO', .09], ['Commerce City, CO', .08], ['Thornton, CO', .07], ['Colorado Springs, CO', .07], ['Arvada, CO', .06], ['Outside the US', .05]]
+    };
     for (var i = 83; i >= 0; i--) {
-      var dt = new Date(Date.now() - i * 864e5), wk = dt.getDay() % 6 ? 1 : .7, v = Math.round((22 + rnd() * 18) * wk), cs = Math.round(v * (.12 + rnd() * .1));
+      var dt = new Date(Date.now() - i * 864e5), day = dt.toLocaleDateString('en-CA'), wk = dt.getDay() % 6 ? 1 : .7;
+      var v = Math.round((22 + rnd() * 18) * wk * (1 + (83 - i) / 160)), pv = Math.round(v * (1.5 + rnd() * .5)), cs = Math.round(v * (.12 + rnd() * .1));
       var cn = Math.round(cs * (.2 + rnd() * .2)), lc = Math.min(cn, Math.round(cn * rnd())), l = lc + (rnd() > .7 ? 1 : 0);
-      daily.push({date: dt.toLocaleDateString('en-CA'), visit: v, calc_start: cs, calc_send: cn, lead: l, lead_calc: lc});
+      daily.push({date: day, visit: v, view: pv, calc_start: cs, calc_send: cn, lead: l, lead_calc: lc});
+      Object.keys(mix).forEach(function(k){ mix[k].forEach(function(m){ var c = Math.round((k === 'page' ? pv : v) * m[1]); if (c) B[k].push([day, m[0], c]); }); });
     }
-    render({daily: daily, locations: [['Denver, CO',310],['Aurora, CO',188],['Lakewood, CO',74],['Commerce City, CO',61],['Thornton, CO',55],['Colorado Springs, CO',41],['Arvada, CO',38],['Outside the US',22]].map(function(x){ return {place:x[0], visits:x[1]}; })}, true);
+    render({daily: daily, breakdowns: B}, true);
   });
 
   var saved = null; try { saved = sessionStorage.getItem('jc-admin'); } catch(e){}

@@ -49,6 +49,6 @@ module.exports = async (req, res) => {
     return res.status(502).json({ ok: false, reason: 'delivery' });
   }
 
-  try { await bump(req, fromCalc ? ['lead', 'lead_calc'] : ['lead']); } catch (err) { console.error('count failed:', err.message); }
+  try { await bump(fromCalc ? [['event', 'lead'], ['event', 'lead_calc']] : [['event', 'lead']]); } catch (err) { console.error('count failed:', err.message); }
   return res.status(200).json({ ok: true });
 };

@@ -16,7 +16,7 @@ Values live only in Vercel. Never commit them.
 
 | Name | What it does |
 | --- | --- |
-| `KV_REST_API_URL`, `KV_REST_API_TOKEN` | Added automatically when an Upstash Redis store is connected to the project from Vercel Storage. Holds the daily counters. |
+| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Supabase project URL and server-only key. Holds the daily counters. Run `supabase/setup.sql` once in the Supabase SQL editor first. |
 | `ADMIN_PASSWORD` | Password for `/admin/`. |
 | `GHL_WEBHOOK_URL` | Inbound webhook URL from a GoHighLevel workflow. Every lead is posted here as JSON. |
 
@@ -25,3 +25,11 @@ Until these are set the site still works: the form tells visitors to call or tex
 ## Lead fields sent to the webhook
 
 `full_name`, `first_name`, `last_name`, `phone` (+1XXXXXXXXXX), `journey_stage`, `best_time`, `calculator_summary`, `lead_source` (`Website form` or `Website calculator`), `consent_to_contact`, `consent_text`, `page`, `submitted_at`.
+
+## Microsoft Clarity
+
+Paste the Clarity project ID into `js/clarity.js`. Empty means off. The form and calculator are masked.
+
+## Guides
+
+The 11 guide pages are generated: edit `scripts/articles.json`, then run `python3 scripts/build_articles.py`.

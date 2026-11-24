@@ -132,6 +132,8 @@ for slug in ORDER:
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
 <script type="application/ld+json">{ld}</script>
 <style>{CSS}</style>
+<script src="/js/clarity.js" defer></script>
+<script src="/js/track.js" defer></script>
 </head>
 <body>
 <header class="top">
