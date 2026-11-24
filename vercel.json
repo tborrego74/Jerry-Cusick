@@ -73,102 +73,102 @@
   {
    "source": "/tag/va-loan",
    "destination": "/va-home-loans-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/va-loan/",
    "destination": "/va-home-loans-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/dscr-loan",
    "destination": "/dscr-loans-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/dscr-loan/",
    "destination": "/dscr-loans-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/good-neighbor-next-door",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/good-neighbor-next-door/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/hud-homes",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/hud-homes/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/teachers",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/teachers/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/first-responders",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/first-responders/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/fha-loans",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/fha-loans/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/100-down-payment",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/100-down-payment/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/homebuyer-programs",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/homebuyer-programs/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/colorado-homebuyers",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/tag/colorado-homebuyers/",
    "destination": "/good-neighbor-next-door-colorado/",
-   "permanent": false
+   "permanent": true
   },
   {
    "source": "/author/:path*",
@@ -208,116 +208,6 @@
   {
    "source": "/:slug/feed/",
    "destination": "/:slug/",
-   "permanent": false
-  },
-  {
-   "source": "/va-home-loans-colorado",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-home-loans-colorado/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-loans-colorado-springs",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-loans-colorado-springs/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-funding-fee-colorado",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-funding-fee-colorado/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-certificate-of-eligibility-colorado",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-certificate-of-eligibility-colorado/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/colorado-disabled-veteran-property-tax-exemption",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/colorado-disabled-veteran-property-tax-exemption/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-loans-colorado-faq",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/va-loans-colorado-faq/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-loans-colorado",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-loans-colorado/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-loan-requirements-colorado",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-loan-requirements-colorado/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-short-term-rental-colorado-mountain-towns",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-short-term-rental-colorado-mountain-towns/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-loans-colorado-faq",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/dscr-loans-colorado-faq/",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/good-neighbor-next-door-colorado",
-   "destination": "/#paths",
-   "permanent": false
-  },
-  {
-   "source": "/good-neighbor-next-door-colorado/",
-   "destination": "/#paths",
    "permanent": false
   },
   {
