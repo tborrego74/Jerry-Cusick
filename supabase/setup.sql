@@ -40,3 +40,5 @@ end $$;
 
 revoke all on function jc_bump(date, text[], text[]) from public, anon, authenticated;
 revoke all on function jc_limit(text, integer) from public, anon, authenticated;
+grant execute on function jc_bump(date, text[], text[]) to service_role;
+grant execute on function jc_limit(text, integer) to service_role;
